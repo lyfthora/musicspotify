@@ -61,45 +61,40 @@ export default class Playlists extends Component {
 
   offsetPlaylist = 0;
   getListas = () => {
-    axios.get(`https://api.spotify.com/v1/me/playlists?limit=${Global.playlistLimit}&offset=${this.offsetPlaylist}`, this.headers)
-      .then(response => {
-        const datos = response.data;
-        const totalListas = datos.total;
+    axios.get("https://api.spotify.com/v1/me/playlists?limit=" + Global.playlistLimit + "&offset=" + this.offsetPlaylist + "", this.headers).then(response => {
+      const datos = response.data
+      // console.log(datos);
+      var totalListas = (datos.total)
+      // BUCLE
+      if (this.offsetPlaylist < totalListas) {
 
-        const playlists = [];
-        const playlistsPublicas = [];
-        const playlistsPrivadas = [];
-        const playlistsSeguidas = [];
-
-        datos.items.forEach(item => {
-          playlists.push(item);
-          if (item.public) {
-            playlistsPublicas.push(item);
-          } else if (item.owner.display_name === this.state.nombreUsuario) {
-            playlistsPrivadas.push(item);
-          } else {
-            playlistsSeguidas.push(item);
+        for (var i = 0; i < datos.items.length; i++) {
+          this.state.playlists.push(datos.items[i])
+          if (datos.items[i].public === true) {
+            this.state.playlistsPublicas.push(datos.items[i])
           }
-        });
-
-        this.offsetPlaylist += Global.playlistLimit;
-        if (this.offsetPlaylist < totalListas) {
-          this.getListas();
-        } else {
-          this.setState({
-            playlists,
-            playlistsPublicas,
-            playlistsPrivadas,
-            playlistsSeguidas,
-            statusPlay: true,
-            totalListas,
-          });
+          if (datos.items[i].public === false && datos.items[i].owner.display_name === this.state.nombreUsuario) {
+            this.state.playlistsPrivadas.push(datos.items[i])
+          }
+          if (datos.items[i].owner.display_name !== this.nombreUsuario) {
+            this.state.playlistsSeguidas.push(datos.items[i])
+          }
         }
-      })
-      .catch(error => {
-        console.error('Error fetching playlists:', error);
-        this.setState({ statusLoading: false });
-      });
+        this.offsetPlaylist += Global.playlistLimit;
+        this.getListas()
+
+      }
+      else {
+        this.setState({
+          playlists: this.state.playlists,
+          playlistsPrivadas: this.state.playlistsPrivadas,
+          playlistsPublicas: this.state.playlistsPublicas,
+          playlistsSeguidas: this.state.playlistsSeguidas,
+          statusPlay: true,
+          totalListas: totalListas,
+        })
+      }
+    })
   }
 
 
@@ -108,87 +103,87 @@ export default class Playlists extends Component {
   offsetSongs = 0;
   auxSongs = [];
   getCanciones = (playlist) => {
-    const id = playlist.id;
-    const total = playlist.tracks.total;
+    const id = playlist.id
+    const total = playlist.tracks.total
 
     this.setState({
       statusSong: false,
       statusLoading: true,
-    });
+    })
 
-    if (total === 0) {
+    if (total !== 0) {
+
+
       this.setState({
-        statusSong: true,
-        statusLoading: false,
-      });
-      return;
-    }
+        imgP: playlist.images[0].url,
+        nombreP: playlist.name
+      })
 
-    this.setState({
-      imgP: playlist.images[0]?.url || '',
-      nombreP: playlist.name || 'Desconocida',
-    });
+      axios.get("https://api.spotify.com/v1/playlists/" + id + "/tracks?limit=" + Global.songLimit + "&offset=" + this.offsetSongs + "", this.headers).then(response => {
+        // console.log(total);
 
-    axios.get(`https://api.spotify.com/v1/playlists/${id}/tracks?limit=${Global.songLimit}&offset=${this.offsetSongs}`, this.headers)
-      .then(response => {
-        const datos = response.data;
-        console.log('Datos de la respuesta:', datos);
 
-        if (datos.items.length > 0) {
-          const songs = datos.items.map((item, i) => {
-            const track = item.track;
-            const artists = track.artists.map(artist => artist.name).join(', ');
-            const album = track.album.name;
-            const duration = track.duration_ms;
-            const min = Math.floor(duration / 1000 / 60);
-            const sec = Math.floor((duration / 1000) % 60).toString().padStart(2, '0');
 
-            return (
-              <tr key={track.id + i}>
+        if (this.offsetSongs < total) {
+          const datos = response.data
+          // console.log(datos);
+          for (var i = 0; i < datos.items.length; i++) {
+
+            var artists = "";
+            if (datos.items[i].track.artists.length === 1) {
+              artists = datos.items[i].track.artists[0].name
+            } else {
+              for (var s = 0; s < datos.items[i].track.artists.length; s++) {
+                if (s > 0) {
+                  artists += ", " + datos.items[i].track.artists[s].name;
+                }
+                artists += datos.items[i].track.artists[s].name;
+              }
+            }
+
+            var album = datos.items[i].track.album.name
+
+            var duration = datos.items[i].track.duration_ms;
+            var min = Math.floor((duration / 1000 / 60) << 0);
+            var sec = Math.floor((duration / 1000) % 60);
+
+            if (sec.toString().length === 1) {
+              sec = "0" + sec;
+            }
+
+            this.auxSongs.push(
+              <tr key={datos.items[i].track.id + i}>
                 <td className="numeroCancion">{i + 1}</td>
-                <td className="nombreCancion">
-                  <a href={track.album.images[0]?.url} target="_blank" rel="noopener noreferrer">
-                    <img className="imagenCancion" alt="" src={track.album.images[0]?.url} />
-                  </a>
-                  <span className="nombreEspecial">{track.name}</span>
-                </td>
+                <td className="nombreCancion"><a href={datos.items[i].track.album.images[0].url} target="blank" ><img className="imagenCancion" alt="" src={datos.items[i].track.album.images[0].url} /></a><span className="nombreEspecial">{datos.items[i].track.name}</span></td>
                 <td className="artistaCancion"><span>{artists}</span></td>
                 <td className="albumCancion"><span>{album}</span></td>
                 <td className="duracionCancion">{min}:{sec}</td>
               </tr>
-            );
-          });
-
-          this.auxSongs.push(...songs);
-          this.offsetSongs += Global.songLimit;
-
-          if (this.offsetSongs < total) {
-            this.getCanciones(playlist);
-          } else {
-            this.setState({
-              songs: this.auxSongs,
-              songsText: this.auxSongs,
-              statusSong: true,
-              statusLoading: false,
-            });
-            this.auxSongs = [];
-            this.offsetSongs = 0; // Reset offset after completing the loading
+            )
           }
+
+
+          this.offsetSongs += Global.songLimit;
+          this.getCanciones(playlist)
+
+
         } else {
+          //ACABA DE AÑADIR TODAS LAS CANCIONES
+          this.offsetSongs = 0;
+          this.contCanciones = 0;
+
           this.setState({
             songs: this.auxSongs,
             songsText: this.auxSongs,
             statusSong: true,
             statusLoading: false,
-          });
+          })
           this.auxSongs = [];
-          this.offsetSongs = 0;
         }
+
       })
-      .catch(error => {
-        console.error('Error fetching songs:', error);
-        this.setState({ statusLoading: false });
-      });
+    }
+
   }
 
 
@@ -206,9 +201,6 @@ export default class Playlists extends Component {
         <div className="general">
           <div className="playlists row mx-lg-5 mx-3">
             <div className="datosPlaylist col-sm-12 col-md-3 col-lg-3 p-0">
-              <div className="totalPlaylists">
-                <h1 className="numeroListas">PLAYLISTS: {this.state.totalListas}</h1>
-              </div>
               <div className="listas">
                 <details>
                   <summary><FontAwesomeIcon icon={faLockOpen} className="mx-2 icon" />Publicas</summary>
