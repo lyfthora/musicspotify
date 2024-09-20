@@ -1,3 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&display=swap");
+
+:root {
+  --accent: #e5b9c6;
+  --accent-active: #e5b9c6;
+  --accent-inactive: #121212;
+  --banner: #e5b9c6;
+  --border-active: #e5b9c6;
+  --border-inactive: #535353;
+  --header: #535353;
+  --highlight: #1a1a1a;
+  --main: #121212;
+  --notification: #4687d6;
+  --notification-error: #e22134;
+  --subtext: #b3b3b3;
+  --text: #ffffff;
+}
+
 /* GENERAL */
 html,
 body {
@@ -7,24 +25,67 @@ body {
   background-color: #121212;
 }
 
-.playlists-container {
+/* Pages  */
+.pages {
+  width: 96%;
+  background-color: var(--accent-inactive);
+  color: var(--text);
+  border: 2px solid var(--border-inactive);
+  margin: 20px 20px 0 20px;
+  transition: border-color 0.3s ease;
+}
+
+.pages:hover {
+  border-color: var(--border-active);
+}
+
+.pages nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pages nav ul li {
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pages nav ul li:hover {
+  background-color: var(--highlight);
+}
+
+.content-wrapper {
   display: flex;
-  height: 700px;
+  flex-grow: 1;
 }
-/* SIDEBAR */
+/* sidebar */
 .sidebar {
-  width: 25%;
-  background-color: #121212;
-  color: white;
-  border: 2px solid black;
+  flex-grow: 1;
+  background-color: var(--accent-inactive);
+  color: var(--text);
+  border: 2px solid var(--border-inactive);
   overflow-y: auto;
-  margin: 0 20px 0 20px;
+  transition: border-color 0.3s ease;
+  margin: 20px -1px 0px 20px;
 }
+.sidebar-container {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  margin: 20px 20px 20px 20px;
+}
+
+.sidebar:hover {
+  border-color: var(--border-active);
+}
+
 .details-container {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 20px;
+  margin: 20px 0 0 25px;
+  /* border-bottom: 1px solid var(--border-inactive); */
 }
 
 .details-container details {
@@ -41,6 +102,7 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: pointer;
+  color: var(--text);
 }
 
 .content {
@@ -53,6 +115,7 @@ body {
 .listas {
   display: flex;
   flex-direction: column;
+  background-color: var(--main);
 }
 
 .btnPlist {
@@ -60,7 +123,7 @@ body {
   align-items: center;
   width: 100%;
   text-align: left;
-  padding: 20px 0 0 25px;
+  padding: 15px 0 15px 25px;
   margin-top: 5px;
   background: none;
   border: none;
@@ -68,10 +131,22 @@ body {
   transition: background-color 0.3s;
 }
 
+.btnPlist span {
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: white;
+}
+
 .btnPlist:hover {
   background-color: #121212;
 }
 
+.playlists-container {
+  display: flex;
+  height: calc(100vh - 60px);
+}
 .playlist-thumbnail {
   width: 40px;
   height: 40px;
@@ -85,14 +160,6 @@ body {
   object-fit: cover;
   margin-right: 10px;
   border-radius: 4px;
-}
-
-.btnPlist span {
-  flex-grow: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: white;
 }
 
 .canciones {
@@ -138,9 +205,7 @@ body {
   color: white;
 }
 
-/* ... rest of your existing styles ... */
-
-@media (max-width: 768px) {
+@ia (max-width: 768px) {
   .playlists-container {
     flex-direction: column;
   }
@@ -177,4 +242,18 @@ body {
 .playlists-list {
   display: flex;
   flex-direction: column;
+}
+
+.playlists-list button {
+  color: var(--subtext);
+  background-color: var(--accent-inactive);
+}
+
+.playlists-list button:hover {
+  background-color: var(--highlight);
+}
+
+.playlists-list button.active {
+  color: var(--text);
+  background-color: var(--accent-active);
 }

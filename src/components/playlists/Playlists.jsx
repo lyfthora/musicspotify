@@ -1,289 +1,143 @@
 import React, { Component } from "react";
-import Global from "../../Global/Global";
-import axios from "axios";
-import './Playlist.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLock, faLockOpen, faHeart } from '@fortawesome/free-solid-svg-icons'
-import Header from "../header/Header";
-import { Navigate } from "react-router-dom";
-import { getRefreshedAccesToken } from "../../utils";
-
+import './Playlist.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLock, faLockOpen, faHeart } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
+import Global from '../../Global/Global';
 
 export default class Playlists extends Component {
-
-  // searchParams = new URLSearchParams(window.location.search);
-  // access_token = this.searchParams.get("access_token");
-
-  access_token = localStorage.getItem('access_token');
-  nombreUsuario = localStorage.getItem('user_id');
-
-
-
   state = {
     playlists: [],
     playlistsPublicas: [],
     playlistsPrivadas: [],
     playlistsSeguidas: [],
+    activeCategory: null,
     statusPlay: false,
-    statusLoading: false,
-    total: 0,
-    songs: [],
-    songsText: [],
-    statusSong: false,
-    imgP: "",
-    nombreP: "",
-    nombreUsuario: "",
-    activeCategory: null
-  }
-
-  headers = {
-    headers: {
-      "Authorization": "Bearer " + this.access_token
-    }
-  }
-
-  componentDidMount = () => {
-
-    // console.log("en playlist: "+Global.access_token)
-    this.getUsuario()
-    this.getListas()
-    getRefreshedAccesToken();
-  }
-
-  getUsuario = () => {
-    axios.get("https://api.spotify.com/v1/me", this.headers).then(response => {
-      const nombre = response.data.id
-      this.setState({
-        nombreUsuario: nombre
-      })
-
-    })
+    totalListas: 0,
+    nombreUsuario: '',
   }
 
   offsetPlaylist = 0;
+
+  componentDidMount() {
+    this.getUsuario();
+  }
+
+  getUsuario = () => {
+    const headers = {
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem('access_token')
+      }
+    };
+
+    axios.get("https://api.spotify.com/v1/me", headers).then(response => {
+      const nombre = response.data.id;
+      this.setState({
+        nombreUsuario: nombre
+      }, () => {
+        this.getListas();
+      });
+    });
+  }
+
   getListas = () => {
-    axios.get("https://api.spotify.com/v1/me/playlists?limit=" + Global.playlistLimit + "&offset=" + this.offsetPlaylist + "", this.headers).then(response => {
-      const datos = response.data
-      // console.log(datos);
-      var totalListas = (datos.total)
-      // BUCLE
+    const headers = {
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem('access_token')
+      }
+    };
+
+    axios.get("https://api.spotify.com/v1/me/playlists?limit=" + Global.playlistLimit + "&offset=" + this.offsetPlaylist, headers).then(response => {
+      const datos = response.data;
+      var totalListas = datos.total;
+
       if (this.offsetPlaylist < totalListas) {
+        const newPlaylists = [...this.state.playlists];
+        const newPlaylistsPublicas = [...this.state.playlistsPublicas];
+        const newPlaylistsPrivadas = [...this.state.playlistsPrivadas];
+        const newPlaylistsSeguidas = [...this.state.playlistsSeguidas];
 
         for (var i = 0; i < datos.items.length; i++) {
-          this.state.playlists.push(datos.items[i])
+          newPlaylists.push(datos.items[i]);
           if (datos.items[i].public === true) {
-            this.state.playlistsPublicas.push(datos.items[i])
+            newPlaylistsPublicas.push(datos.items[i]);
           }
           if (datos.items[i].public === false && datos.items[i].owner.display_name === this.state.nombreUsuario) {
-            this.state.playlistsPrivadas.push(datos.items[i])
+            newPlaylistsPrivadas.push(datos.items[i]);
           }
-          if (datos.items[i].owner.display_name !== this.nombreUsuario) {
-            this.state.playlistsSeguidas.push(datos.items[i])
+          if (datos.items[i].owner.display_name !== this.state.nombreUsuario) {
+            newPlaylistsSeguidas.push(datos.items[i]);
           }
         }
-        this.offsetPlaylist += Global.playlistLimit;
-        this.getListas()
 
-      }
-      else {
         this.setState({
-          playlists: this.state.playlists,
-          playlistsPrivadas: this.state.playlistsPrivadas,
-          playlistsPublicas: this.state.playlistsPublicas,
-          playlistsSeguidas: this.state.playlistsSeguidas,
+          playlists: newPlaylists,
+          playlistsPublicas: newPlaylistsPublicas,
+          playlistsPrivadas: newPlaylistsPrivadas,
+          playlistsSeguidas: newPlaylistsSeguidas,
+        }, () => {
+          this.offsetPlaylist += Global.playlistLimit;
+          this.getListas();
+        });
+      } else {
+        this.setState({
           statusPlay: true,
           totalListas: totalListas,
-        })
+        });
       }
-    })
-  }
-
-
-
-
-  offsetSongs = 0;
-  auxSongs = [];
-  getCanciones = (playlist) => {
-    const id = playlist.id
-    const total = playlist.tracks.total
-
-    this.setState({
-      statusSong: false,
-      statusLoading: true,
-    })
-
-    if (total !== 0) {
-
-
-      this.setState({
-        imgP: playlist.images[0].url,
-        nombreP: playlist.name
-      })
-
-      axios.get("https://api.spotify.com/v1/playlists/" + id + "/tracks?limit=" + Global.songLimit + "&offset=" + this.offsetSongs + "", this.headers).then(response => {
-        // console.log(total);
-
-
-
-        if (this.offsetSongs < total) {
-          const datos = response.data
-          // console.log(datos);
-          for (var i = 0; i < datos.items.length; i++) {
-
-            var artists = "";
-            if (datos.items[i].track.artists.length === 1) {
-              artists = datos.items[i].track.artists[0].name
-            } else {
-              for (var s = 0; s < datos.items[i].track.artists.length; s++) {
-                if (s > 0) {
-                  artists += ", " + datos.items[i].track.artists[s].name;
-                }
-                artists += datos.items[i].track.artists[s].name;
-              }
-            }
-
-            var album = datos.items[i].track.album.name
-
-            var duration = datos.items[i].track.duration_ms;
-            var min = Math.floor((duration / 1000 / 60) << 0);
-            var sec = Math.floor((duration / 1000) % 60);
-
-            if (sec.toString().length === 1) {
-              sec = "0" + sec;
-            }
-
-            this.auxSongs.push(
-              <tr key={datos.items[i].track.id + i}>
-                <td className="numeroCancion">{i + 1}</td>
-                <td className="nombreCancion"><a href={datos.items[i].track.album.images[0].url} target="blank" ><img className="imagenCancion" alt="" src={datos.items[i].track.album.images[0].url} /></a><span className="nombreEspecial">{datos.items[i].track.name}</span></td>
-                <td className="artistaCancion"><span>{artists}</span></td>
-                <td className="albumCancion"><span>{album}</span></td>
-                <td className="duracionCancion">{min}:{sec}</td>
-              </tr>
-            )
-          }
-
-
-          this.offsetSongs += Global.songLimit;
-          this.getCanciones(playlist)
-
-
-        } else {
-          //ACABA DE AÑADIR TODAS LAS CANCIONES
-          this.offsetSongs = 0;
-          this.contCanciones = 0;
-
-          this.setState({
-            songs: this.auxSongs,
-            songsText: this.auxSongs,
-            statusSong: true,
-            statusLoading: false,
-          })
-          this.auxSongs = [];
-        }
-
-      })
-    }
-
-  }
-
-
-  // *RENDER
-  render() {
-
-    if (this.access_token === null) {
-      return (<Navigate to="/" />)
-    }
-
-
-    return (
-      <div>
-        <Header seleccion="playlists" />
-        <div className="general">
-          <div className="playlists-container">
-            <div className="sidebar">
-              <div className="listas">
-                <div className="details-container">
-                  <details onClick={() => this.handleCategoryClick('publicas')}>
-                    <summary><FontAwesomeIcon icon={faLockOpen} className="icon" />Publicas</summary>
-                  </details>
-                  <details onClick={() => this.handleCategoryClick('privadas')}>
-                    <summary><FontAwesomeIcon icon={faLock} className="icon" />Privadas</summary>
-                  </details>
-                  <details onClick={() => this.handleCategoryClick('seguidas')}>
-                    <summary><FontAwesomeIcon icon={faHeart} className="icon" />Seguidas</summary>
-                  </details>
-                </div>
-                <div className="playlists-list">
-                  {this.state.activeCategory === 'publicas' && this.state.playlistsPublicas.map(this.renderPlaylistButton)}
-                  {this.state.activeCategory === 'privadas' && this.state.playlistsPrivadas.map(this.renderPlaylistButton)}
-                  {this.state.activeCategory === 'seguidas' && this.state.playlistsSeguidas.map(this.renderPlaylistButton)}
-                </div>
-              </div>
-            </div>
-
-            <div className="content">
-              {this.state.statusSong ? (
-                <div className="canciones">
-                  <div className="infoLista">
-                    <img className="imgLista" src={this.state.imgP} alt="" />
-                    <h3 className="nombrePlaylist">{this.state.nombreP}</h3>
-                  </div>
-                  <div className="divTablaCanciones">
-                    <table className="tablaCanciones">
-                      <thead>
-                        <tr>
-                          <th className="numeroCancion">#</th>
-                          <th className="nombreCancion">NOMBRE</th>
-                          <th className="artistaCancion">ARTISTA</th>
-                          <th className="albumCancion">ALBUM</th>
-                          <th className="duracionCancion">DURACION</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {this.state.songsText}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              ) : this.state.statusLoading ? (
-                <div className="load">
-                  <h1>CARGANDO...</h1>
-                  <div className="carga"></div>
-                </div>
-              ) : (
-                <div className="noSongs">
-                  <h1>NO HAS SELECIONADO UNA PLAYLIST</h1>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+    }).catch(error => {
+      console.error("Error fetching playlists:", error);
+    });
   }
 
   handleCategoryClick = (category) => {
-    this.setState(prevState => ({
-      activeCategory: prevState.activeCategory === category ? null : category
-    }));
+    this.setState({ activeCategory: category });
+  }
+
+  handlePlaylistClick = (playlist) => {
+    this.props.onPlaylistSelect(playlist);
   }
 
   renderPlaylistButton = (playlist, index) => {
     const imageUrl = playlist.images && playlist.images.length > 0
       ? playlist.images[0].url
-      : 'path/to/default/image.png'; // Asegúrate de tener una imagen por defecto
+      : 'path/to/default/image.png';
 
     return (
       <button
         key={playlist.id + index}
         data-plistid={playlist.id}
-        onClick={() => this.getCanciones(playlist)}
+        onClick={() => this.handlePlaylistClick(playlist)}
         className="btnPlist"
       >
         <img src={imageUrl} alt={playlist.name} className="playlist-thumbnail" />
         <span>{playlist.name === "" ? "Sin Nombre" : playlist.name}</span>
       </button>
+    );
+  }
+
+  render() {
+    return (
+      <div className="sidebar">
+        <div className="listas">
+          <div className="details-container">
+            <details onClick={() => this.handleCategoryClick('publicas')}>
+              <summary><FontAwesomeIcon icon={faLockOpen} className="icon" />Publicas</summary>
+            </details>
+            <details onClick={() => this.handleCategoryClick('privadas')}>
+              <summary><FontAwesomeIcon icon={faLock} className="icon" />Privadas</summary>
+            </details>
+            <details onClick={() => this.handleCategoryClick('seguidas')}>
+              <summary><FontAwesomeIcon icon={faHeart} className="icon" />Seguidas</summary>
+            </details>
+          </div>
+          <div className="playlists-list">
+            {this.state.activeCategory === 'publicas' && this.state.playlistsPublicas.map(this.renderPlaylistButton)}
+            {this.state.activeCategory === 'privadas' && this.state.playlistsPrivadas.map(this.renderPlaylistButton)}
+            {this.state.activeCategory === 'seguidas' && this.state.playlistsSeguidas.map(this.renderPlaylistButton)}
+          </div>
+        </div>
+      </div>
     );
   }
 }
