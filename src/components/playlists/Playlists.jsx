@@ -199,108 +199,80 @@ export default class Playlists extends Component {
       <div>
         <Header seleccion="playlists" />
         <div className="general">
-          <div className="playlists row mx-lg-5 mx-3">
-            <div className="datosPlaylist col-sm-12 col-md-3 col-lg-3 p-0">
+          <div className="playlists-container">
+            <div className="sidebar">
               <div className="listas">
                 <details>
-                  <summary><FontAwesomeIcon icon={faLockOpen} className="mx-2 icon" />Publicas</summary>
-                  {/* CREACION DE BOTONES */}
-                  {
-                    this.state.playlistsPublicas.map((playlist, index) => {
-                      return (
-                        <button key={playlist.id + index} data-plistid={playlist.id} onClick={() => this.getCanciones(playlist)} className="btnPlist">
-                          {
-                            (playlist.name === "") ?
-                              ("Sin Nombre") :
-                              (playlist.name)
-                          }
-                        </button>
-                      )
-                    })
-                  }
+                  <summary><FontAwesomeIcon icon={faLockOpen} className="icon" />Publicas</summary>
+                  {this.state.playlistsPublicas.map(this.renderPlaylistButton)}
                 </details>
                 <details>
-                  <summary><FontAwesomeIcon icon={faLock} className="mx-2 icon" />Privadas</summary>
-                  {
-                    this.state.playlistsPrivadas.map((playlist, index) => {
-                      return (
-                        <button key={playlist.id + index} data-plistid={playlist.id} onClick={() => this.getCanciones(playlist)} className="btnPlist">
-                          {
-                            (playlist.name === "") ?
-                              ("Sin Nombre") :
-                              (playlist.name)
-                          }
-                        </button>
-                      )
-                    })
-                  }
+                  <summary><FontAwesomeIcon icon={faLock} className="icon" />Privadas</summary>
+                  {this.state.playlistsPrivadas.map(this.renderPlaylistButton)}
                 </details>
                 <details>
-                  <summary><FontAwesomeIcon icon={faHeart} className="mx-2 icon" />Seguidas</summary>
-                  {
-                    this.state.playlistsSeguidas.map((playlist, index) => {
-                      return (
-                        <button key={playlist.id + index} data-plistid={playlist.id} onClick={() => this.getCanciones(playlist)} className="btnPlist">
-                          {
-                            (playlist.name === "") ?
-                              ("Sin Nombre") :
-                              (playlist.name)
-                          }
-                        </button>
-                      )
-                    })
-                  }
+                  <summary><FontAwesomeIcon icon={faHeart} className="icon" />Seguidas</summary>
+                  {this.state.playlistsSeguidas.map(this.renderPlaylistButton)}
                 </details>
               </div>
             </div>
 
-            {
-              (this.state.statusSong === true) ?
-                (
-                  <div className="canciones p-0 col-sm-12 col-md-9 col-lg-9">
-                    <div className="infoLista">
-                      <img className="imgLista" src={this.state.imgP} alt=""></img>
-                      <h3 className="nombrePlaylist">{this.state.nombreP}</h3>
-                    </div>
-                    <div className="divTablaCanciones">
-                      <table className="tablaCanciones">
-                        <thead>
-                          <tr>
-                            <th className="col-xs-1 numeroCancion">#</th>
-                            <th className="col-xs-4 nombreCancion ">NOMBRE</th>
-                            <th className="col-xs-3 artistaCancion ">ARTISTA</th>
-                            <th className="col-xs-2 albumCancion ">ALBUM</th>
-                            <th className="col-xs-1 duracionCancion">DURACION</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {this.state.songsText}
-                        </tbody>
-                      </table>
-                    </div>
+            <div className="content">
+              {this.state.statusSong ? (
+                <div className="canciones">
+                  <div className="infoLista">
+                    <img className="imgLista" src={this.state.imgP} alt="" />
+                    <h3 className="nombrePlaylist">{this.state.nombreP}</h3>
                   </div>
-                ) :
-                (this.state.statusLoading === true) ?
-                  (
-                    <div className="canciones col-sm-12 col-md-9 col-lg-9">
-                      <div className="load">
-                        <h1>CARGANDO...</h1>
-                        <div className="mx-auto carga"></div>
-                      </div>
-                    </div>
-                  ) :
-                  (
-                    <div className="canciones p-0 col-sm-12 col-md-9 col-lg-9">
-                      <div className="noSongs">
-                        <h1>NO HAS SELECIONADO UNA PLAYLIST</h1>
-                      </div>
-                    </div>
-                  )
-            }
-
+                  <div className="divTablaCanciones">
+                    <table className="tablaCanciones">
+                      <thead>
+                        <tr>
+                          <th className="numeroCancion">#</th>
+                          <th className="nombreCancion">NOMBRE</th>
+                          <th className="artistaCancion">ARTISTA</th>
+                          <th className="albumCancion">ALBUM</th>
+                          <th className="duracionCancion">DURACION</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {this.state.songsText}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              ) : this.state.statusLoading ? (
+                <div className="load">
+                  <h1>CARGANDO...</h1>
+                  <div className="carga"></div>
+                </div>
+              ) : (
+                <div className="noSongs">
+                  <h1>NO HAS SELECIONADO UNA PLAYLIST</h1>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
+    );
+  }
+
+  renderPlaylistButton = (playlist, index) => {
+    const imageUrl = playlist.images && playlist.images.length > 0
+      ? playlist.images[0].url
+      : 'path/to/default/image.png'; // Asegúrate de tener una imagen por defecto
+
+    return (
+      <button
+        key={playlist.id + index}
+        data-plistid={playlist.id}
+        onClick={() => this.getCanciones(playlist)}
+        className="btnPlist"
+      >
+        <img src={imageUrl} alt={playlist.name} className="playlist-thumbnail" />
+        <span>{playlist.name === "" ? "Sin Nombre" : playlist.name}</span>
+      </button>
     );
   }
 }
