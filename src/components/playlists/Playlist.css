@@ -80,6 +80,31 @@ body {
   border-color: var(--border-active);
 }
 
+.categories-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.category-button {
+  color: white;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.category-button:hover,
+.category-button.active {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.category-button .icon {
+  margin-right: 10px;
+}
+
 .details-container {
   display: flex;
   justify-content: space-between;

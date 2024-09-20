@@ -91,7 +91,9 @@ export default class Playlists extends Component {
   }
 
   handleCategoryClick = (category) => {
-    this.setState({ activeCategory: category });
+    this.setState(prevState => ({
+      activeCategory: prevState.activeCategory === category ? null : category
+    }));
   }
 
   handlePlaylistClick = (playlist) => {
@@ -120,16 +122,25 @@ export default class Playlists extends Component {
     return (
       <div className="sidebar">
         <div className="listas">
-          <div className="details-container">
-            <details onClick={() => this.handleCategoryClick('publicas')}>
-              <summary><FontAwesomeIcon icon={faLockOpen} className="icon" />Publicas</summary>
-            </details>
-            <details onClick={() => this.handleCategoryClick('privadas')}>
-              <summary><FontAwesomeIcon icon={faLock} className="icon" />Privadas</summary>
-            </details>
-            <details onClick={() => this.handleCategoryClick('seguidas')}>
-              <summary><FontAwesomeIcon icon={faHeart} className="icon" />Seguidas</summary>
-            </details>
+          <div className="categories-container">
+            <button
+              onClick={() => this.handleCategoryClick('publicas')}
+              className={`category-button ${this.state.activeCategory === 'publicas' ? 'active' : ''}`}
+            >
+              <FontAwesomeIcon icon={faLockOpen} className="icon" />Publicas
+            </button>
+            <button
+              onClick={() => this.handleCategoryClick('privadas')}
+              className={`category-button ${this.state.activeCategory === 'privadas' ? 'active' : ''}`}
+            >
+              <FontAwesomeIcon icon={faLock} className="icon" />Privadas
+            </button>
+            <button
+              onClick={() => this.handleCategoryClick('seguidas')}
+              className={`category-button ${this.state.activeCategory === 'seguidas' ? 'active' : ''}`}
+            >
+              <FontAwesomeIcon icon={faHeart} className="icon" />Seguidas
+            </button>
           </div>
           <div className="playlists-list">
             {this.state.activeCategory === 'publicas' && this.state.playlistsPublicas.map(this.renderPlaylistButton)}
