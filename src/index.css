@@ -1,12 +1,5 @@
-@font-face {
-  font-family: "SpotyLight";
-  src: url(./assets/fonts/ProximaNova-Light.ttf);
-}
-@font-face {
-  font-family: "SpotyReg";
-  src: url(./assets/fonts/ProximaNova-Regular.ttf);
-}
-@font-face {
-  font-family: "SpotyExtra";
-  src: url(./assets/fonts/ProximaNova-Extrabld.ttf);
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&display=swap");
+
+:root {
+  --font-family: "DM Mono", monospace;
 }

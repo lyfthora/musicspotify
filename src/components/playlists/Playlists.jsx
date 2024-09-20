@@ -32,7 +32,8 @@ export default class Playlists extends Component {
     statusSong: false,
     imgP: "",
     nombreP: "",
-    nombreUsuario: ""
+    nombreUsuario: "",
+    activeCategory: null
   }
 
   headers = {
@@ -202,18 +203,22 @@ export default class Playlists extends Component {
           <div className="playlists-container">
             <div className="sidebar">
               <div className="listas">
-                <details>
-                  <summary><FontAwesomeIcon icon={faLockOpen} className="icon" />Publicas</summary>
-                  {this.state.playlistsPublicas.map(this.renderPlaylistButton)}
-                </details>
-                <details>
-                  <summary><FontAwesomeIcon icon={faLock} className="icon" />Privadas</summary>
-                  {this.state.playlistsPrivadas.map(this.renderPlaylistButton)}
-                </details>
-                <details>
-                  <summary><FontAwesomeIcon icon={faHeart} className="icon" />Seguidas</summary>
-                  {this.state.playlistsSeguidas.map(this.renderPlaylistButton)}
-                </details>
+                <div className="details-container">
+                  <details onClick={() => this.handleCategoryClick('publicas')}>
+                    <summary><FontAwesomeIcon icon={faLockOpen} className="icon" />Publicas</summary>
+                  </details>
+                  <details onClick={() => this.handleCategoryClick('privadas')}>
+                    <summary><FontAwesomeIcon icon={faLock} className="icon" />Privadas</summary>
+                  </details>
+                  <details onClick={() => this.handleCategoryClick('seguidas')}>
+                    <summary><FontAwesomeIcon icon={faHeart} className="icon" />Seguidas</summary>
+                  </details>
+                </div>
+                <div className="playlists-list">
+                  {this.state.activeCategory === 'publicas' && this.state.playlistsPublicas.map(this.renderPlaylistButton)}
+                  {this.state.activeCategory === 'privadas' && this.state.playlistsPrivadas.map(this.renderPlaylistButton)}
+                  {this.state.activeCategory === 'seguidas' && this.state.playlistsSeguidas.map(this.renderPlaylistButton)}
+                </div>
               </div>
             </div>
 
@@ -256,6 +261,12 @@ export default class Playlists extends Component {
         </div>
       </div>
     );
+  }
+
+  handleCategoryClick = (category) => {
+    this.setState(prevState => ({
+      activeCategory: prevState.activeCategory === category ? null : category
+    }));
   }
 
   renderPlaylistButton = (playlist, index) => {
