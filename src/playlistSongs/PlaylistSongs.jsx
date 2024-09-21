@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Global from '../../Global/Global';
+import Global from '../Global/Global';
+import './PlaylistSongs.css';
 
 class PlaylistSongs extends Component {
     state = {

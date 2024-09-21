@@ -2,4 +2,17 @@
 
 :root {
   --font-family: "DM Mono", monospace;
+  --accent: #e5b9c6;
+  --accent-active: #e5b9c6;
+  --accent-inactive: #121212;
+  --banner: #e5b9c6;
+  --border-active: #e5b9c6;
+  --border-inactive: #535353;
+  --header: #535353;
+  --highlight: #1a1a1a;
+  --main: #121212;
+  --notification: #4687d6;
+  --notification-error: #e22134;
+  --subtext: #b3b3b3;
+  --text: #ffffff;
 }

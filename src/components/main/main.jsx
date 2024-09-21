@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import Header from '../header/Header';
 import Playlists from '../playlists/Playlists';
 import Pages from '../pages/pages';
-import PlaylistSongs from '../playlists/PlaylistSongs';
+import PlaylistSongs from '../../playlistSongs/PlaylistSongs';
 import { Navigate } from "react-router-dom";
+import '../../index.css';
 
 function Main() {
     const [selectedPlaylist, setSelectedPlaylist] = useState(null);
