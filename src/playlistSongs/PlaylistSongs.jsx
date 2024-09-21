@@ -13,6 +13,8 @@ class PlaylistSongs extends Component {
         nombreP: '',
     };
 
+
+
     offsetSongs = 0;
     auxSongs = [];
 
@@ -133,13 +135,13 @@ class PlaylistSongs extends Component {
                 </div>
                 <div className="divTablaCanciones">
                     <table className="tablaCanciones">
-                        <thead>
+                        <thead className="infoCanciones">
                             <tr>
                                 <th className="numeroCancion">#</th>
-                                <th className="nombreCancion">NOMBRE</th>
-                                <th className="artistaCancion">ARTISTA</th>
-                                <th className="albumCancion">ALBUM</th>
-                                <th className="duracionCancion">DURACION</th>
+                                <th className="nombreCancion">Title</th>
+                                <th className="artistaCancion">Artist</th>
+                                <th className="albumCancion">Album</th>
+                                <th className="duracionCancion">Duration</th>
                             </tr>
                         </thead>
                         <tbody>

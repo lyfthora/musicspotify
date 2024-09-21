@@ -116,6 +116,7 @@ body {
 .playlists-container {
   display: flex;
   height: calc(100vh - 60px);
+  width: 100%;
 }
 .playlist-thumbnail {
   width: 40px;
