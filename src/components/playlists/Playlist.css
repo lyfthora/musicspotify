@@ -5,6 +5,7 @@ body {
 }
 .general {
   background-color: #121212;
+  font-size: 13px;
 }
 
 .content-wrapper {
@@ -46,6 +47,7 @@ body {
   padding: 10px;
   cursor: pointer;
   transition: background-color 0.3s;
+  font-size: 13px; /* mismo que .general */
 }
 
 .category-button:hover,
@@ -99,6 +101,7 @@ body {
   border: none;
   cursor: pointer;
   transition: background-color 0.3s;
+  font-size: 13px; /*el  mismo que .general */
 }
 
 .btnPlist span {
@@ -115,7 +118,7 @@ body {
 
 .playlists-container {
   display: flex;
-  height: calc(100vh - 60px);
+  height: calc(95vh - 60px);
   width: 100%;
 }
 .playlist-thumbnail {

@@ -16,3 +16,7 @@
   --subtext: #b3b3b3;
   --text: #ffffff;
 }
+
+body {
+  font-family: var(--font-family);
+}
