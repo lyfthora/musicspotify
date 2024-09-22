@@ -29,7 +29,6 @@
 }
 
 .nombrePlaylist {
-  font-family: SpotyExtra;
   font-size: 40px;
   color: black;
   margin: 0;
@@ -37,14 +36,7 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
-tbody,
-td,
-tfoot,
-th,
-thead,
-tr {
-  padding: 5px 5px 10px 15px;
-}
+
 .infoCanciones {
   letter-spacing: 2px;
   color: #535353;
@@ -98,12 +90,11 @@ tr {
   margin: 20px 0 0 20px;
   border-collapse: separate;
   border-spacing: 0 5px;
-  table-layout: fixed; /* Añade esta línea */
+  table-layout: fixed;
 }
 
 .tablaCanciones th,
 .tablaCanciones td {
-  padding: 10px 0;
   text-align: left;
   white-space: nowrap;
   overflow: hidden;
@@ -170,7 +161,7 @@ tr {
   background-color: var(--accent-inactive);
   color: var(--text);
   border: 2px solid var(--border-inactive);
-  margin: 40px 0px 20px 0px;
+  margin: 15px 0px 20px 0px;
   transition: border-color 0.3s ease;
 }
 

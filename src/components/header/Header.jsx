@@ -18,8 +18,8 @@ export default class Header extends Component {
         statusPerf: false,
         user: "",
         user2: "",
-        seleccionPlaylists:"",
-        seleccionEstadisticas:"",
+        seleccionPlaylists: "",
+        seleccionEstadisticas: "",
     }
 
     componentDidMount = () => {
@@ -95,7 +95,7 @@ export default class Header extends Component {
                                                 <FontAwesomeIcon icon={faRightFromBracket} className="mx-2 logOutIcono fa-2xl" />
                                             </Link>
                                             <Link to="/">
-                                                <h1 className="logOutTexto" >Cerrar sesion</h1>
+                                                <h1 className="logOutTexto" >Log Out</h1>
                                             </Link>
                                         </div>
                                         <div className="datosUsu">

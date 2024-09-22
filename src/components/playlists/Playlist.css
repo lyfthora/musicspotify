@@ -20,13 +20,13 @@ body {
   border: 2px solid var(--border-inactive);
   overflow-y: auto;
   transition: border-color 0.3s ease;
-  margin: 20px -5px 0px 20px;
+  margin: 15px -5px 0px 20px;
 }
 .sidebar-container {
   display: flex;
   flex-direction: column;
   width: 25%;
-  margin: 20px 20px 20px 20px;
+  margin: -5px 20px 20px 20px;
 }
 
 .sidebar:hover {
@@ -47,7 +47,6 @@ body {
   padding: 10px;
   cursor: pointer;
   transition: background-color 0.3s;
-  font-size: 13px; /* mismo que .general */
 }
 
 .category-button:hover,
@@ -101,7 +100,6 @@ body {
   border: none;
   cursor: pointer;
   transition: background-color 0.3s;
-  font-size: 13px; /*el  mismo que .general */
 }
 
 .btnPlist span {

@@ -127,19 +127,19 @@ export default class Playlists extends Component {
               onClick={() => this.handleCategoryClick('publicas')}
               className={`category-button ${this.state.activeCategory === 'publicas' ? 'active' : ''}`}
             >
-              <FontAwesomeIcon icon={faLockOpen} className="icon" />Publicas
+              <FontAwesomeIcon icon={faLockOpen} className="icon" />Public
             </button>
             <button
               onClick={() => this.handleCategoryClick('privadas')}
               className={`category-button ${this.state.activeCategory === 'privadas' ? 'active' : ''}`}
             >
-              <FontAwesomeIcon icon={faLock} className="icon" />Privadas
+              <FontAwesomeIcon icon={faLock} className="icon" />Private
             </button>
             <button
               onClick={() => this.handleCategoryClick('seguidas')}
               className={`category-button ${this.state.activeCategory === 'seguidas' ? 'active' : ''}`}
             >
-              <FontAwesomeIcon icon={faHeart} className="icon" />Seguidas
+              <FontAwesomeIcon icon={faHeart} className="icon" />Liked
             </button>
           </div>
           <div className="playlists-list">
