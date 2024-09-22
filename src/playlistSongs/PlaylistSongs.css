@@ -15,7 +15,6 @@
 .infoLista {
   width: 100%;
   height: 100px;
-
   display: flex;
   align-items: center;
   padding: 0 20px;
@@ -48,7 +47,44 @@ tr {
 }
 .infoCanciones {
   letter-spacing: 2px;
-  color: rgba(255, 255, 255, 0.1);
+  color: #535353;
+  text-align: left;
+}
+.separadorInfoCanciones {
+  width: 1950%;
+  margin: 10px 0 15px 5px;
+  border: none;
+  height: 1px;
+  background-color: #535353;
+}
+
+.nombreCancion {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0 -275px 0 0;
+}
+.nombreCancion:hover {
+  color: var(--text-active);
+}
+.artistaCancion:hover {
+  color: var(--text-active);
+}
+.albumCancion:hover {
+  color: var(--text-active);
+}
+.duracionCancion:hover {
+  color: var(--text-active);
+}
+
+.nombreEspecialAlbum,
+.nombreEspecial {
+  max-width: 200px;
+  width: 70%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
 }
 
 .divTablaCanciones {
@@ -60,7 +96,75 @@ tr {
   width: 100%;
   color: white;
   margin: 20px 0 0 20px;
+  border-collapse: separate;
+  border-spacing: 0 5px;
+  table-layout: fixed; /* Añade esta línea */
 }
+
+.tablaCanciones th,
+.tablaCanciones td {
+  padding: 10px 0;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.numeroCancion {
+  width: 5%;
+}
+
+.titulo-artista-container {
+  width: 60%;
+  display: flex;
+  align-items: center;
+}
+
+.nombreCancion {
+  display: flex;
+  align-items: center;
+  width: auto;
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin-right: -145px;
+}
+
+.artistaCancion {
+  flex-grow: 1;
+  padding-left: 0;
+}
+
+.albumCancion {
+  width: 25%;
+}
+
+.duracionCancion {
+  width: 10%;
+  text-align: right;
+}
+
+.nombreEspecial {
+  max-width: 230px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nombreEspecialArtista {
+  max-width: 230px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.imagenCancion {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  margin-right: 10px;
+  border-radius: 4px;
+}
+
 .content {
   width: 71%;
   background-color: var(--accent-inactive);
@@ -72,4 +176,13 @@ tr {
 
 .content:hover {
   border-color: var(--border-active);
+}
+
+.nombreEspecial,
+.nombreEspecialArtista,
+.nombreEspecialAlbum {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
 }

@@ -74,8 +74,8 @@ class PlaylistSongs extends Component {
                                     </a>
                                     <span className="nombreEspecial">{track.name || "Unknown Track"}</span>
                                 </td>
-                                <td className="artistaCancion"><span>{artists}</span></td>
-                                <td className="albumCancion"><span>{album}</span></td>
+                                <td className="artistaCancion"><span className="nombreEspecialArtista">{artists}</span></td>
+                                <td className="albumCancion"><span className="nombreEspecialAlbum">{album}</span></td>
                                 <td className="duracionCancion">{min}:{sec}</td>
                             </tr>
                         );
@@ -144,6 +144,7 @@ class PlaylistSongs extends Component {
                                 <th className="duracionCancion">Duration</th>
                             </tr>
                         </thead>
+                        <hr className="separadorInfoCanciones" />
                         <tbody>
                             {songsText}
                         </tbody>
