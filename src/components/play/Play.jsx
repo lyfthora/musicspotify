@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './Play.css';  // Asegúrate de crear este archivo CSS para los estilos
+import './Play.css';
 
 const Play = ({ track }) => {
     const [isPlaying, setIsPlaying] = useState(false);
