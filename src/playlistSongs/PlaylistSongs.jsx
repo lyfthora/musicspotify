@@ -13,8 +13,6 @@ class PlaylistSongs extends Component {
         nombreP: '',
     };
 
-
-
     offsetSongs = 0;
     auxSongs = [];
 
@@ -66,7 +64,11 @@ class PlaylistSongs extends Component {
                         }
 
                         this.auxSongs.push(
-                            <tr key={track.id + i}>
+                            <tr
+                                key={track.id + i}
+                                onClick={() => this.handleTrackClick(track)}
+                                className="clickableRow"
+                            >
                                 <td className="numeroCancion">{this.offsetSongs + i + 1}</td>
                                 <td className="nombreCancion">
                                     <a href={albumImageUrl} target="blank">
@@ -103,6 +105,18 @@ class PlaylistSongs extends Component {
             this.setState({
                 statusLoading: false,
                 statusSong: false,
+            });
+        }
+    }
+
+    handleTrackClick = (track) => {
+        if (this.props.onTrackSelect) {
+            this.props.onTrackSelect({
+                uri: track.uri,
+                name: track.name,
+                artists: track.artists.map(artist => artist.name).join(", "),
+                albumImage: track.album.images[0].url,
+                previewUrl: track.preview_url
             });
         }
     }

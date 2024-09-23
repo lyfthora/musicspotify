@@ -1,0 +1,49 @@
+.player {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #282828;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.now-playing {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.album-cover {
+  width: 56px;
+  height: 56px;
+  margin-right: 16px;
+}
+
+.track-info {
+  flex-grow: 1;
+}
+
+.track-info h3 {
+  margin: 0;
+  color: white;
+}
+
+.track-info p {
+  margin: 4px 0 0;
+  color: #b3b3b3;
+}
+
+.play-pause-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.error {
+  color: red;
+  margin-bottom: 8px;
+}
