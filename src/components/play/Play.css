@@ -40,13 +40,17 @@
 }
 
 .play-button {
-  background-color: #1db954;
+  background-color: var(--header);
   color: white;
   border: none;
   border-radius: 50%;
   width: 32px;
   height: 32px;
-  font-size: 12px;
+  font-size: 18px;
+  padding-right: 1px;
+  position: relative;
+  left: -50%;
+  transform: translate(-50%, 0%);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -82,7 +86,7 @@
   position: absolute;
   top: 94.2%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-85%);
   font-weight: 500;
   color: black;
   font-size: 12px;

@@ -53,7 +53,7 @@ class PlaylistSongs extends Component {
                         let album = track.album && track.album.name ? track.album.name : "Unknown Album";
                         let albumImageUrl = track.album && track.album.images && track.album.images.length > 0
                             ? track.album.images[0].url
-                            : 'path/to/default/album/image.jpg'; // Asegúrate de tener una imagen por defecto
+                            : 'path/to/default/album/image.jpg';
 
                         let duration = track.duration_ms || 0;
                         let min = Math.floor((duration / 1000 / 60) << 0);

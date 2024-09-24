@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Play.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
 
 const Play = ({ track }) => {
     const [isPlaying, setIsPlaying] = useState(false);
@@ -50,7 +52,7 @@ const Play = ({ track }) => {
                             <p>{track.artists}</p>
                         </div>
                         <button onClick={togglePlay} className="play-button">
-                            {isPlaying ? "Pausa" : "Play"}
+                            {isPlaying ? <FontAwesomeIcon icon={faPause} /> : <FontAwesomeIcon icon={faPlay} />}
                         </button>
                     </div>
                     <div className="player-progress">
