@@ -69,6 +69,8 @@ const Play = ({ track }) => {
                 </>
             ) : (
                 <p>No hay pista seleccionada</p>
+
+
             )}
         </div>
     );

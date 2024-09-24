@@ -14,7 +14,6 @@ function Main() {
 
     useEffect(() => {
         if (!accessToken) {
-            // Redirigir al usuario a la página de inicio de sesión o mostrar un mensaje de error
             console.error("No access token found");
         }
     }, [accessToken]);
@@ -61,11 +60,9 @@ function Main() {
                     </div>
                 </div>
             </div>
-            {selectedTrack && (
-                <div className="player-container">
-                    <Play track={selectedTrack} />
-                </div>
-            )}
+            <div className="player-container">
+                <Play track={selectedTrack} />
+            </div>
         </div>
     );
 }
