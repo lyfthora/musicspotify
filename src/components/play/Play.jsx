@@ -3,17 +3,24 @@ import './Play.css';
 
 const Play = ({ track }) => {
     const [isPlaying, setIsPlaying] = useState(false);
+    const [currentTime, setCurrentTime] = useState(0);
     const audioRef = useRef(new Audio(track?.previewUrl));
 
     useEffect(() => {
         if (track?.previewUrl) {
             audioRef.current.src = track.previewUrl;
+            setCurrentTime(0);
         }
     }, [track]);
 
     useEffect(() => {
+        const audio = audioRef.current;
+        const updateTime = () => setCurrentTime(audio.currentTime);
+        audio.addEventListener('timeupdate', updateTime);
+
         return () => {
-            audioRef.current.pause();
+            audio.removeEventListener('timeupdate', updateTime);
+            audio.pause();
         };
     }, []);
 
@@ -26,18 +33,41 @@ const Play = ({ track }) => {
         setIsPlaying(!isPlaying);
     };
 
-    if (!track) return null;
+    const formatTime = (time) => {
+        const minutes = Math.floor(time / 60);
+        const seconds = Math.floor(time % 60);
+        return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    };
 
     return (
         <div className="player">
-            <img src={track.albumImage} alt={track.name} className="album-cover" />
-            <div className="track-info">
-                <h3>{track.name}</h3>
-                <p>{track.artists}</p>
-            </div>
-            <button onClick={togglePlay} className="play-button">
-                {isPlaying ? "Pausa" : "Play"}
-            </button>
+            {track ? (
+                <>
+                    <div className="player-content">
+                        <img src={track.albumImage} alt={track.name} className="album-cover" />
+                        <div className="track-info">
+                            <h3>{track.name}</h3>
+                            <p>{track.artists}</p>
+                        </div>
+                        <button onClick={togglePlay} className="play-button">
+                            {isPlaying ? "Pausa" : "Play"}
+                        </button>
+                    </div>
+                    <div className="player-progress">
+                        <div className="progress-bar">
+                            <div
+                                className="progress"
+                                style={{ width: `${(currentTime / 30) * 100}%` }}
+                            ></div>
+                            <div className="time-display">
+                                {formatTime(currentTime)} / 0:30
+                            </div>
+                        </div>
+                    </div>
+                </>
+            ) : (
+                <p>No hay pista seleccionada</p>
+            )}
         </div>
     );
 };

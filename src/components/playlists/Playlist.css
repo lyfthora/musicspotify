@@ -20,7 +20,7 @@ body {
   border: 2px solid var(--border-inactive);
   overflow-y: auto;
   transition: border-color 0.3s ease;
-  margin: 15px -5px 0px 20px;
+  margin: 15px -5px 75px 20px;
 }
 .sidebar-container {
   display: flex;
@@ -116,7 +116,7 @@ body {
 
 .playlists-container {
   display: flex;
-  height: calc(95vh - 60px);
+  height: calc(91vh - 60px);
   width: 100%;
 }
 .playlist-thumbnail {
