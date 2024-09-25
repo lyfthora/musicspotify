@@ -76,8 +76,10 @@
 .progress-bar {
   width: 100%;
   height: 20px;
-  background-color: #ddd;
+  background-color: var(--accent);
   margin-top: 10px;
+  margin-left: 15px;
+  margin-right: 15px;
 }
 
 .progress {
