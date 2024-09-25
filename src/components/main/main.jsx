@@ -5,7 +5,6 @@ import Playlists from '../playlists/Playlists';
 import Pages from '../pages/pages';
 import PlaylistSongs from '../../playlistSongs/PlaylistSongs';
 import Play from '../play/Play';
-import Volume from '../volume/Volume';
 import '../../index.css';
 
 function Main() {
