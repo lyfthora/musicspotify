@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import Header from '../header/Header';
 import Playlists from '../playlists/Playlists';
 import Pages from '../pages/pages';
-import PlaylistSongs from '../../playlistSongs/PlaylistSongs';
+import PlaylistSongs from '../playlistSongs/PlaylistSongs';
 import Play from '../play/Play';
 import '../../index.css';
 
