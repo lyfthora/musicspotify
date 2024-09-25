@@ -20,7 +20,7 @@ body {
   border: 2px solid var(--border-inactive);
   overflow-y: auto;
   transition: border-color 0.3s ease;
-  margin: 15px -5px 75px 20px;
+  margin: 15px -11px 75px 20px;
 }
 .sidebar-container {
   display: flex;
