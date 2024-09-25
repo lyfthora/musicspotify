@@ -5,6 +5,7 @@ import Playlists from '../playlists/Playlists';
 import Pages from '../pages/pages';
 import PlaylistSongs from '../playlistSongs/PlaylistSongs';
 import Play from '../play/Play';
+import BuddyList from '../Buddylist/Buddylist';
 import '../../index.css';
 
 function Main() {
@@ -63,6 +64,9 @@ function Main() {
                                 <h1>Cargando playlist...</h1>
                             </div>
                         )}
+                    </div>
+                    <div className="buddy-list-container">
+                        <BuddyList />
                     </div>
                 </div>
             </div>

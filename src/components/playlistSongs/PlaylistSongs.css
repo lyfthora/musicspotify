@@ -36,6 +36,9 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
+.clickableRow:hover {
+  background-color: var(--highlight);
+}
 
 .infoCanciones {
   letter-spacing: 2px;
@@ -158,11 +161,11 @@
 }
 
 .content {
-  width: 71%;
+  width: 130%;
   background-color: var(--accent-inactive);
   color: var(--text);
   border: 2px solid var(--border-inactive);
-  margin: 15px 0px 95px 0px;
+  margin: 15px 15px 95px 5px;
   transition: border-color 0.3s ease;
 }
 

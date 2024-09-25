@@ -1,0 +1,46 @@
+.buddy-list {
+  border: 2px solid var(--border-inactive);
+  margin: 15px 31px -9px 0px;
+  padding: 10px 140px 290px 10px;
+}
+.buddy-list:hover {
+  border-color: var(--border-active);
+}
+.buddy-list h2 {
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.buddy-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.buddy {
+  display: flex;
+  flex-direction: column;
+  margin: 15px -130px 0px 0px;
+  padding: 10px 0 20px 5px;
+  border-radius: 4px;
+}
+.buddy:hover {
+  background-color: var(--highlight);
+}
+
+.buddy.online .buddy-status {
+  color: var(--accent);
+}
+
+.buddy.offline .buddy-status {
+  color: #b3b3b3;
+}
+
+.buddy-name {
+  font-weight: bold;
+  color: #fff;
+}
+
+.buddy-track {
+  font-size: 0.9em;
+  color: #b3b3b3;
+}
