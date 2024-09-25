@@ -11,7 +11,7 @@ export default class Playlists extends Component {
     playlistsPublicas: [],
     playlistsPrivadas: [],
     playlistsSeguidas: [],
-    activeCategory: null,
+    activeCategory: 'seguidas', // Cambiado a 'seguidas' por defecto
     statusPlay: false,
     totalListas: 0,
     nombreUsuario: '',
@@ -83,17 +83,47 @@ export default class Playlists extends Component {
         this.setState({
           statusPlay: true,
           totalListas: totalListas,
-        });
+        }, this.selectFirstSongFromFirstPlaylist);
       }
     }).catch(error => {
       console.error("Error fetching playlists:", error);
     });
   }
 
+  selectFirstSongFromFirstPlaylist = () => {
+    if (this.state.playlistsSeguidas.length > 0) {
+      const firstPlaylist = this.state.playlistsSeguidas[0];
+      this.getPlaylistSongs(firstPlaylist);
+    }
+  }
+
+  getPlaylistSongs = (playlist) => {
+    const headers = {
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem('access_token')
+      }
+    };
+
+    axios.get(`https://api.spotify.com/v1/playlists/${playlist.id}/tracks`, headers)
+      .then(response => {
+        if (response.data.items.length > 0) {
+          const firstSong = response.data.items[0].track;
+          const songInfo = {
+            id: firstSong.id,
+            name: firstSong.name,
+            artists: firstSong.artists.map(artist => artist.name).join(', '),
+            albumImage: firstSong.album.images[0]?.url,
+            previewUrl: firstSong.preview_url
+          };
+          this.props.onPlaylistSelect(playlist);
+          this.props.onTrackSelect(songInfo);
+        }
+      })
+      .catch(error => console.error("Error fetching playlist songs:", error));
+  }
+
   handleCategoryClick = (category) => {
-    this.setState(prevState => ({
-      activeCategory: prevState.activeCategory === category ? null : category
-    }));
+    this.setState({ activeCategory: category });
   }
 
   handlePlaylistClick = (playlist) => {
@@ -116,6 +146,13 @@ export default class Playlists extends Component {
         <span>{playlist.name === "" ? "Sin Nombre" : playlist.name}</span>
       </button>
     );
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // Cuando las playlists seguidas se cargan, selecciona la primera
+    if (prevState.playlistsSeguidas.length === 0 && this.state.playlistsSeguidas.length > 0) {
+      this.handlePlaylistClick(this.state.playlistsSeguidas[0]);
+    }
   }
 
   render() {

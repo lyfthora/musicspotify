@@ -13,19 +13,22 @@
 .player-content {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 2px;
+  justify-content: flex-start;
+  margin: 15px 0 3px 0;
+  padding-left: 15px;
 }
 
 .album-cover {
-  width: 56px;
-  height: 56px;
+  width: 40px;
+  height: 40px;
   object-fit: cover;
-  margin-right: 16px;
+  margin-right: 10px;
+  border-radius: 4px;
 }
 
 .track-info {
   flex-grow: 1;
+  margin-left: 5px;
 }
 
 .track-info h3 {
@@ -48,9 +51,9 @@
   width: 32px;
   height: 32px;
   font-size: 18px;
-  padding-right: 1px;
-  position: relative;
-  left: -50%;
+  padding-right: 4px;
+  position: absolute;
+  left: 50%;
   transform: translate(-50%, 0%);
   cursor: pointer;
   display: flex;
@@ -87,7 +90,7 @@
   position: absolute;
   top: 94.2%;
   left: 50%;
-  transform: translateX(-85%);
+  transform: translateX(-49%);
   font-weight: 500;
   color: black;
   font-size: 12px;

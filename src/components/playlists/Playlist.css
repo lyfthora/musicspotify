@@ -94,8 +94,8 @@ body {
   align-items: center;
   width: 100%;
   text-align: left;
-  padding: 15px 0 15px 25px;
-  margin-top: 5px;
+  padding: 10px 15px 5px 15px;
+  margin-top: 0;
   background: none;
   border: none;
   cursor: pointer;

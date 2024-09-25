@@ -2,11 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import './Play.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
-
+import Volume from '../volume/Volume';
+import '../../index.css';
 const Play = ({ track }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
-    const audioRef = useRef(new Audio(track?.previewUrl));
+    const audioRef = useRef(new Audio());
 
     useEffect(() => {
         if (track?.previewUrl) {
@@ -54,6 +55,7 @@ const Play = ({ track }) => {
                         <button onClick={togglePlay} className="play-button">
                             {isPlaying ? <FontAwesomeIcon icon={faPause} /> : <FontAwesomeIcon icon={faPlay} />}
                         </button>
+                        <Volume audioRef={audioRef} />
                     </div>
                     <div className="player-progress">
                         <div className="progress-bar">
@@ -69,8 +71,6 @@ const Play = ({ track }) => {
                 </>
             ) : (
                 <p>No hay pista seleccionada</p>
-
-
             )}
         </div>
     );

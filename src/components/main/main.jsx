@@ -5,6 +5,7 @@ import Playlists from '../playlists/Playlists';
 import Pages from '../pages/pages';
 import PlaylistSongs from '../../playlistSongs/PlaylistSongs';
 import Play from '../play/Play';
+import Volume from '../volume/Volume';
 import '../../index.css';
 
 function Main() {
@@ -12,17 +13,17 @@ function Main() {
     const [selectedTrack, setSelectedTrack] = useState(null);
     const [accessToken, setAccessToken] = useState(localStorage.getItem('access_token'));
 
-    useEffect(() => {
-        if (!accessToken) {
-            console.error("No access token found");
-        }
-    }, [accessToken]);
-
     const headers = {
         headers: {
             "Authorization": "Bearer " + accessToken
         }
     };
+
+    useEffect(() => {
+        if (!accessToken) {
+            console.error("No access token found");
+        }
+    }, [accessToken]);
 
     if (!accessToken) {
         return <Navigate to="/" />;
@@ -43,7 +44,12 @@ function Main() {
                 <div className="playlists-container">
                     <div className="sidebar-container">
                         <Pages />
-                        <Playlists onPlaylistSelect={handlePlaylistSelect} />
+                        <Playlists
+                            onPlaylistSelect={handlePlaylistSelect}
+                            setInitialPlaylist={setSelectedPlaylist}
+                            onTrackSelect={handleTrackSelect}
+                            headers={headers}
+                        />
                     </div>
                     <div className="content">
                         {selectedPlaylist ? (
@@ -51,10 +57,11 @@ function Main() {
                                 playlist={selectedPlaylist}
                                 headers={headers}
                                 onTrackSelect={handleTrackSelect}
+                                setInitialTrack={setSelectedTrack}
                             />
                         ) : (
                             <div className="noSongs">
-                                <h1>NO HAS SELECCIONADO UNA PLAYLIST</h1>
+                                <h1>Cargando playlist...</h1>
                             </div>
                         )}
                     </div>
@@ -62,6 +69,7 @@ function Main() {
             </div>
             <div className="player-container">
                 <Play track={selectedTrack} />
+
             </div>
         </div>
     );
