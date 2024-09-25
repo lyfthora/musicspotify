@@ -55,9 +55,9 @@ class PlaylistSongs extends Component {
                             ? track.album.images[0].url
                             : 'path/to/default/album/image.jpg';
 
-                        let duration = track.duration_ms || 0;
-                        let min = Math.floor((duration / 1000 / 60) << 0);
-                        let sec = Math.floor((duration / 1000) % 60);
+                        let duration = track.duration_ms || 0; // este propiedad es para la duracion de la cancion (esta en milisegundos)
+                        let min = Math.floor((duration / 1000 / 60) << 0); // este es para los minutos
+                        let sec = Math.floor((duration / 1000) % 60); // este es para los segundos
 
                         if (sec.toString().length === 1) {
                             sec = "0" + sec;
@@ -116,7 +116,8 @@ class PlaylistSongs extends Component {
                 name: track.name,
                 artists: track.artists.map(artist => artist.name).join(", "),
                 albumImage: track.album.images[0].url,
-                previewUrl: track.preview_url
+                previewUrl: track.preview_url,
+                duration: track.duration_ms
             });
         }
     }
