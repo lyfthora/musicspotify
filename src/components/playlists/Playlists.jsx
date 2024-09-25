@@ -89,14 +89,14 @@ export default class Playlists extends Component {
       console.error("Error fetching playlists:", error);
     });
   }
-
+  // se obtiene la primera cancion de la playlist nada mas
   selectFirstSongFromFirstPlaylist = () => {
     if (this.state.playlistsSeguidas.length > 0) {
       const firstPlaylist = this.state.playlistsSeguidas[0];
       this.getPlaylistSongs(firstPlaylist);
     }
   }
-
+  // se obtiene la primera cancion de la playlist nada mas
   getPlaylistSongs = (playlist) => {
     const headers = {
       headers: {
