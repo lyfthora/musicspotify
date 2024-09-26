@@ -26,6 +26,12 @@
 .pages nav ul li:hover {
   background-color: var(--highlight);
 }
+.text-decoration {
+  position: absolute;
+  top: 107px;
+  background-color: var(--main);
+  margin: -1px 0px 0px 5px;
+}
 
 /* .sidebar {
   flex-grow: 1;

@@ -158,7 +158,9 @@ export default class Playlists extends Component {
   render() {
     return (
       <div className="sidebar">
+
         <div className="listas">
+
           <div className="categories-container">
             <button
               onClick={() => this.handleCategoryClick('publicas')}

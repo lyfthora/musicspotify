@@ -6,6 +6,7 @@ import './pages.css';
 const Pages = () => {
     return (
         <div className="pages">
+            <div className="text-decoration">Pages</div>
             <nav>
                 <ul>
                     <li><FontAwesomeIcon icon={faHome} /> Home</li>
