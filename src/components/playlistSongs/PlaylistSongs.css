@@ -168,7 +168,7 @@
 }
 
 .content {
-  width: 130%;
+  width: 100%;
   background-color: var(--accent-inactive);
   color: var(--text);
   border: 2px solid var(--border-inactive);
