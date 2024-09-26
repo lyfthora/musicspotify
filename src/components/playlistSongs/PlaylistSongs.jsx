@@ -5,6 +5,7 @@ import './PlaylistSongs.css';
 import figlet from 'figlet';
 
 
+
 class PlaylistSongs extends Component {
     state = {
         songs: [],
@@ -44,7 +45,7 @@ class PlaylistSongs extends Component {
         });
 
 
-        figlet.text(nombreP, { font: 'Standard' }, (err, data) => {
+        figlet.text(nombreP, { font: '../../assets/fonts/Standard.flf' }, (err, data) => {
             if (!err) {
                 this.setState({ nombrePlaylistAscii: data });
             } else {
