@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Global from '../../Global/Global';
 import './PlaylistSongs.css';
-import figlet from 'figlet';
-
-
 
 class PlaylistSongs extends Component {
     state = {
@@ -14,7 +11,6 @@ class PlaylistSongs extends Component {
         statusLoading: true,
         imgP: '',
         nombreP: '',
-        nombrePlaylistAscii: '',
     };
 
     offsetSongs = 0;
@@ -35,24 +31,13 @@ class PlaylistSongs extends Component {
     getCanciones = (playlist) => {
         const id = playlist.id;
         const total = playlist.tracks.total;
-        const nombreP = playlist.name;
-        this.setState({ nombreP });
 
         this.setState({
             statusSong: false,
             statusLoading: true,
             imgP: playlist.images && playlist.images.length > 0 ? playlist.images[0].url : '',
+            nombreP: playlist.name,
         });
-
-
-        figlet.text(nombreP, { font: '../../assets/fonts/Standard.flf' }, (err, data) => {
-            if (!err) {
-                this.setState({ nombrePlaylistAscii: data });
-            } else {
-                console.error("Error generating ASCII art:", err);
-            }
-        });
-
 
         if (total !== 0) {
             axios.get(`https://api.spotify.com/v1/playlists/${id}/tracks?limit=${Global.songLimit}&offset=${this.offsetSongs}`, this.props.headers)
@@ -138,7 +123,7 @@ class PlaylistSongs extends Component {
     }
 
     render() {
-        const { statusSong, statusLoading, imgP, nombrePlaylistAscii, songsText } = this.state;
+        const { statusSong, statusLoading, imgP, nombreP, songsText } = this.state;
 
         if (statusLoading) {
             return (
@@ -161,9 +146,7 @@ class PlaylistSongs extends Component {
             <div className="canciones">
                 <div className="infoLista">
                     <img className="imgLista" src={imgP} alt="" />
-                    <pre id="asciitext" style={{ float: 'left' }} className="ascii">
-                        {nombrePlaylistAscii}
-                    </pre>
+                    <h3 className="nombrePlaylist">{nombreP}</h3>
                 </div>
                 <div className="divTablaCanciones">
                     <table className="tablaCanciones">

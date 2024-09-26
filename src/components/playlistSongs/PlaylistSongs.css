@@ -30,7 +30,7 @@
 
 .nombrePlaylist {
   font-size: 40px;
-  color: black;
+  color: var(--text);
   margin: 0;
   white-space: nowrap;
   text-overflow: ellipsis;
