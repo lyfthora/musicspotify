@@ -42,7 +42,7 @@
 
 .infoCanciones {
   letter-spacing: 2px;
-  color: #535353;
+  color: var(--subtext);
   text-align: left;
 }
 .separadorInfoCanciones {
