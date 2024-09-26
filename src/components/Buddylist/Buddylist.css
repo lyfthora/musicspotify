@@ -7,7 +7,7 @@
   border-color: var(--border-active);
 }
 .buddy-list h2 {
-  color: #fff;
+  color: var(--text-active);
   margin-bottom: 15px;
 }
 
@@ -36,8 +36,7 @@
 }
 
 .buddy-name {
-  font-weight: bold;
-  color: #fff;
+  color: var(--text);
 }
 
 .buddy-track {

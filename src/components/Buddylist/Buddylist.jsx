@@ -7,9 +7,9 @@ const BuddyList = () => {
     useEffect(() => {
         // Simular la carga de amigos
         const mockBuddies = [
-            { id: 1, name: 'Alice', status: 'online', currentTrack: 'Shape of You - Ed Sheeran' },
-            { id: 2, name: 'Bob', status: 'offline', currentTrack: '' },
-            { id: 3, name: 'Charlie', status: 'online', currentTrack: 'Blinding Lights - The Weeknd' },
+            { id: 1, name: 'Darkkal', status: 'online', currentTrack: 'Shape of You - Ed Sheeran' },
+            { id: 2, name: 'Brayan', status: 'offline', currentTrack: '' },
+            { id: 3, name: 'Lalisa', status: 'online', currentTrack: 'Blinding Lights - The Weeknd' },
 
         ];
 
