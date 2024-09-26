@@ -159,7 +159,6 @@ class PlaylistSongs extends Component {
                                 <th className="duracionCancion">Duration</th>
                             </tr>
                         </thead>
-                        <hr className="separadorInfoCanciones" />
                         <tbody>
                             {songsText}
                         </tbody>
