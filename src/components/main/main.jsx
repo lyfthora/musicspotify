@@ -52,6 +52,7 @@ function Main() {
                         />
                     </div>
                     <div className="content">
+                        <div className="text-decoration-main">Main</div>
                         {selectedPlaylist ? (
                             <PlaylistSongs
                                 playlist={selectedPlaylist}

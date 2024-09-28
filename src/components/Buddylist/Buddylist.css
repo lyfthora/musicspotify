@@ -43,3 +43,10 @@
   font-size: 0.9em;
   color: #b3b3b3;
 }
+.text-decoration-buddylist {
+  position: absolute;
+  color: white;
+  background-color: var(--main);
+  margin: 5px 0 0 -5px;
+  top: 11%;
+}

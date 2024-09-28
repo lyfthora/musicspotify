@@ -18,6 +18,7 @@ const BuddyList = () => {
 
     return (
         <div className="buddy-list">
+            <div className="text-decoration-buddylist">Sidebar</div>
             <h2>Friends</h2>
             <ul>
                 {buddies.map(buddy => (

@@ -97,3 +97,11 @@
   color: black;
   font-size: 12px;
 }
+.text-decoration-player {
+  position: absolute;
+  top: 85%;
+  color: white;
+  margin: 2px 0 0 4px;
+  background-color: var(--main);
+  font-size: 13px;
+}

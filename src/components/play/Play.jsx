@@ -55,6 +55,7 @@ const Play = ({ track }) => {
 
     return (
         <div className="player">
+            <div className="text-decoration-player">Playing</div>
             {track ? (
                 <>
                     <div className="player-content">

@@ -127,7 +127,9 @@ class PlaylistSongs extends Component {
 
         if (statusLoading) {
             return (
+
                 <div className="load">
+
                     <h1>CARGANDO...</h1>
                     <div className="carga"></div>
                 </div>
@@ -143,7 +145,10 @@ class PlaylistSongs extends Component {
         }
 
         return (
+
             <div className="canciones">
+
+
                 <div className="infoLista">
                     <img className="imgLista" src={imgP} alt="" />
                     <h3 className="nombrePlaylist">{nombreP}</h3>

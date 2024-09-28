@@ -193,3 +193,7 @@
   font-family: monospace;
   white-space: pre;
 }
+
+.text-decoration-main {
+  position: absolute;
+}
