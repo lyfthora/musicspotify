@@ -11,7 +11,7 @@ export default class Playlists extends Component {
     playlistsPublicas: [],
     playlistsPrivadas: [],
     playlistsSeguidas: [],
-    activeCategory: 'seguidas', // Cambiado a 'seguidas' por defecto
+    activeCategory: 'privadas',
     statusPlay: false,
     totalListas: 0,
     nombreUsuario: '',
@@ -20,100 +20,63 @@ export default class Playlists extends Component {
   offsetPlaylist = 0;
 
   componentDidMount() {
-    this.getUsuario();
+    this.fetchUserData();
   }
 
-  getUsuario = () => {
-    const headers = {
-      headers: {
-        "Authorization": "Bearer " + localStorage.getItem('access_token')
-      }
-    };
+  fetchUserData = () => {
+    const headers = { Authorization: "Bearer " + localStorage.getItem('access_token') };
 
-    axios.get("https://api.spotify.com/v1/me", headers).then(response => {
-      const nombre = response.data.id;
-      this.setState({
-        nombreUsuario: nombre
-      }, () => {
-        this.getListas();
-      });
-    });
+    axios.get("https://api.spotify.com/v1/me", { headers })
+      .then(({ data }) => {
+        this.setState({ nombreUsuario: data.id }, this.fetchPlaylists);
+      })
+      .catch(error => console.error("Error fetching user data:", error));
   }
 
-  getListas = () => {
-    const headers = {
-      headers: {
-        "Authorization": "Bearer " + localStorage.getItem('access_token')
-      }
-    };
+  fetchPlaylists = () => {
+    const headers = { Authorization: "Bearer " + localStorage.getItem('access_token') };
 
-    axios.get("https://api.spotify.com/v1/me/playlists?limit=" + Global.playlistLimit + "&offset=" + this.offsetPlaylist, headers).then(response => {
-      const datos = response.data;
-      var totalListas = datos.total;
-
-      if (this.offsetPlaylist < totalListas) {
-        const newPlaylists = [...this.state.playlists];
-        const newPlaylistsPublicas = [...this.state.playlistsPublicas];
-        const newPlaylistsPrivadas = [...this.state.playlistsPrivadas];
-        const newPlaylistsSeguidas = [...this.state.playlistsSeguidas];
-
-        for (var i = 0; i < datos.items.length; i++) {
-          newPlaylists.push(datos.items[i]);
-          if (datos.items[i].public === true) {
-            newPlaylistsPublicas.push(datos.items[i]);
-          }
-          if (datos.items[i].public === false && datos.items[i].owner.display_name === this.state.nombreUsuario) {
-            newPlaylistsPrivadas.push(datos.items[i]);
-          }
-          if (datos.items[i].owner.display_name !== this.state.nombreUsuario) {
-            newPlaylistsSeguidas.push(datos.items[i]);
-          }
+    axios.get(`https://api.spotify.com/v1/me/playlists?limit=${Global.playlistLimit}&offset=${this.offsetPlaylist}`, { headers })
+      .then(({ data }) => {
+        if (this.offsetPlaylist < data.total) {
+          const playlists = data.items;
+          this.setState(prevState => ({
+            playlists: [...prevState.playlists, ...playlists],
+            playlistsPublicas: [...prevState.playlistsPublicas, ...playlists.filter(p => p.public)], // Playlist públicas
+            playlistsPrivadas: [...prevState.playlistsPrivadas, ...playlists.filter(p => !p.public && p.owner.id === prevState.nombreUsuario)], // Privadas del usuario
+            playlistsSeguidas: [...prevState.playlistsSeguidas, ...playlists.filter(p => p.owner.id !== prevState.nombreUsuario)], // Playlists seguidas
+            totalListas: data.total,
+          }), () => {
+            this.offsetPlaylist += Global.playlistLimit;
+            this.fetchPlaylists();
+          });
+        } else {
+          this.setState({ statusPlay: true }, this.selectFirstSongFromFirstPlaylist);
         }
-
-        this.setState({
-          playlists: newPlaylists,
-          playlistsPublicas: newPlaylistsPublicas,
-          playlistsPrivadas: newPlaylistsPrivadas,
-          playlistsSeguidas: newPlaylistsSeguidas,
-        }, () => {
-          this.offsetPlaylist += Global.playlistLimit;
-          this.getListas();
-        });
-      } else {
-        this.setState({
-          statusPlay: true,
-          totalListas: totalListas,
-        }, this.selectFirstSongFromFirstPlaylist);
-      }
-    }).catch(error => {
-      console.error("Error fetching playlists:", error);
-    });
+      })
+      .catch(error => console.error("Error fetching playlists:", error));
   }
-  // se obtiene la primera cancion de la playlist nada mas
+
+
   selectFirstSongFromFirstPlaylist = () => {
-    if (this.state.playlistsSeguidas.length > 0) {
-      const firstPlaylist = this.state.playlistsSeguidas[0];
-      this.getPlaylistSongs(firstPlaylist);
+    if (this.state.playlistsPrivadas.length > 0) {
+      this.fetchFirstSong(this.state.playlistsPrivadas[0]);
     }
   }
-  // se obtiene la primera cancion de la playlist nada mas
-  getPlaylistSongs = (playlist) => {
-    const headers = {
-      headers: {
-        "Authorization": "Bearer " + localStorage.getItem('access_token')
-      }
-    };
 
-    axios.get(`https://api.spotify.com/v1/playlists/${playlist.id}/tracks`, headers)
-      .then(response => {
-        if (response.data.items.length > 0) {
-          const firstSong = response.data.items[0].track;
+  fetchFirstSong = (playlist) => {
+    const headers = { Authorization: "Bearer " + localStorage.getItem('access_token') };
+
+    axios.get(`https://api.spotify.com/v1/playlists/${playlist.id}/tracks`, { headers })
+      .then(({ data }) => {
+        if (data.items.length > 0) {
+          const firstSong = data.items[0].track;
           const songInfo = {
             id: firstSong.id,
             name: firstSong.name,
             artists: firstSong.artists.map(artist => artist.name).join(', '),
             albumImage: firstSong.album.images[0]?.url,
-            previewUrl: firstSong.preview_url
+            previewUrl: firstSong.preview_url,
           };
           this.props.onPlaylistSelect(playlist);
           this.props.onTrackSelect(songInfo);
@@ -122,69 +85,50 @@ export default class Playlists extends Component {
       .catch(error => console.error("Error fetching playlist songs:", error));
   }
 
-  handleCategoryClick = (category) => {
-    this.setState({ activeCategory: category });
-  }
+  handleCategoryClick = (category) => this.setState({ activeCategory: category });
 
-  handlePlaylistClick = (playlist) => {
-    this.props.onPlaylistSelect(playlist);
-  }
+  handlePlaylistClick = (playlist) => this.props.onPlaylistSelect(playlist);
 
-  renderPlaylistButton = (playlist, index) => {
-    const imageUrl = playlist.images && playlist.images.length > 0
-      ? playlist.images[0].url
-      : 'path/to/default/image.png';
-
-    return (
-      <button
-        key={playlist.id + index}
-        data-plistid={playlist.id}
-        onClick={() => this.handlePlaylistClick(playlist)}
-        className="btnPlist"
-      >
-        <img src={imageUrl} alt={playlist.name} className="playlist-thumbnail" />
-        <span>{playlist.name === "" ? "Sin Nombre" : playlist.name}</span>
-      </button>
-    );
-  }
+  renderPlaylistButton = (playlist) => (
+    <button
+      key={playlist.id}
+      onClick={() => this.handlePlaylistClick(playlist)}
+      className="btnPlist"
+    >
+      <img src={playlist.images?.[0]?.url || 'path/to/default/image.png'} alt={playlist.name || "Sin Nombre"} className="playlist-thumbnail" />
+      <span>{playlist.name || "Sin Nombre"}</span>
+    </button>
+  );
 
   componentDidUpdate(prevProps, prevState) {
-    // Cuando las playlists seguidas se cargan, selecciona la primera
-    if (prevState.playlistsSeguidas.length === 0 && this.state.playlistsSeguidas.length > 0) {
-      this.handlePlaylistClick(this.state.playlistsSeguidas[0]);
+    if (!prevState.playlistsPrivadas.length && this.state.playlistsPrivadas.length) {
+      this.handlePlaylistClick(this.state.playlistsPrivadas[0]);
     }
   }
 
   render() {
+    const { playlistsPublicas, playlistsPrivadas, playlistsSeguidas, activeCategory } = this.state;
+
     return (
       <div className="sidebar">
-
+        <div className="text-decoration-playlist">Playlist</div>
         <div className="listas">
-
           <div className="categories-container">
-            <button
-              onClick={() => this.handleCategoryClick('publicas')}
-              className={`category-button ${this.state.activeCategory === 'publicas' ? 'active' : ''}`}
-            >
-              <FontAwesomeIcon icon={faLockOpen} className="icon" />Public
-            </button>
-            <button
-              onClick={() => this.handleCategoryClick('privadas')}
-              className={`category-button ${this.state.activeCategory === 'privadas' ? 'active' : ''}`}
-            >
-              <FontAwesomeIcon icon={faLock} className="icon" />Private
-            </button>
-            <button
-              onClick={() => this.handleCategoryClick('seguidas')}
-              className={`category-button ${this.state.activeCategory === 'seguidas' ? 'active' : ''}`}
-            >
-              <FontAwesomeIcon icon={faHeart} className="icon" />Liked
-            </button>
+            {['publicas', 'privadas', 'seguidas'].map(category => (
+              <button
+                key={category}
+                onClick={() => this.handleCategoryClick(category)}
+                className={`category-button ${activeCategory === category ? 'active' : ''}`}
+              >
+                <FontAwesomeIcon icon={category === 'publicas' ? faLockOpen : category === 'privadas' ? faLock : faHeart} className="icon" />
+                {category === 'publicas' ? 'Public' : category === 'privadas' ? 'Private' : 'Liked'}
+              </button>
+            ))}
           </div>
           <div className="playlists-list">
-            {this.state.activeCategory === 'publicas' && this.state.playlistsPublicas.map(this.renderPlaylistButton)}
-            {this.state.activeCategory === 'privadas' && this.state.playlistsPrivadas.map(this.renderPlaylistButton)}
-            {this.state.activeCategory === 'seguidas' && this.state.playlistsSeguidas.map(this.renderPlaylistButton)}
+            {activeCategory === 'publicas' && playlistsPublicas.map(this.renderPlaylistButton)}
+            {activeCategory === 'privadas' && playlistsPrivadas.map(this.renderPlaylistButton)}
+            {activeCategory === 'seguidas' && playlistsSeguidas.map(this.renderPlaylistButton)}
           </div>
         </div>
       </div>

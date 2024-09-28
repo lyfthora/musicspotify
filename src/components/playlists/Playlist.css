@@ -126,6 +126,12 @@ body {
   margin-right: 10px;
   border-radius: 4px;
 }
+.text-decoration-playlist {
+  position: absolute;
+  top: 34%;
+  background-color: var(--main);
+  margin: 0 0 0 4px;
+}
 
 @ia (max-width: 768px) {
   .playlists-container {
