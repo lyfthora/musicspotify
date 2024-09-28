@@ -37,6 +37,10 @@ body {
   display: flex;
   justify-content: space-between;
   padding: 10px;
+  position: sticky;
+  top: 0;
+  background-color: var(--main);
+  z-index: 99;
 }
 
 .category-button {
@@ -131,6 +135,7 @@ body {
   top: 34%;
   background-color: var(--main);
   margin: 0 0 0 4px;
+  z-index: 999999999;
 }
 
 @ia (max-width: 768px) {
