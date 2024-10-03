@@ -196,4 +196,7 @@
 
 .text-decoration-main {
   position: absolute;
+  top: 11.5%;
+  background-color: var(--main);
+  margin: 0 0 0 4px;
 }
