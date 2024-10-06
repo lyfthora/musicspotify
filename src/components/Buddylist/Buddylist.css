@@ -1,9 +1,11 @@
 .buddy-list {
-  width: 30%;
-  height: 46%;
+  width: 81%;
+  height: 82%;
   border: 2px solid var(--border-inactive);
-  margin: 15px 31px -9px 0px;
-  padding: 11px 145px 290px 10px;
+  margin: 17px 31px 0px 0px;
+  padding: 11px 8px;
+
+  overflow-y: hidden;
 }
 .buddy-list:hover {
   border-color: var(--border-active);
@@ -16,14 +18,18 @@
 .buddy-list ul {
   list-style-type: none;
   padding: 0;
+  margin: 0;
 }
 
 .buddy {
   display: flex;
   flex-direction: column;
-  margin: 15px -130px 0px 0px;
-  padding: 10px 0 20px 5px;
-  border-radius: 4px;
+  justify-content: space-between;
+  margin: 15px 0;
+  padding: 10px 5px;
+  height: 70px;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 .buddy:hover {
   background-color: var(--highlight);
@@ -44,11 +50,15 @@
 .buddy-track {
   font-size: 0.9em;
   color: #b3b3b3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
 }
 .text-decoration-buddylist {
   position: absolute;
   color: white;
   background-color: var(--main);
-  margin: 5px 0 0 -5px;
+  margin: 7px 0 0 -5px;
   top: 11%;
 }

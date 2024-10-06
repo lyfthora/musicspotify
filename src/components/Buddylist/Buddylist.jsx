@@ -36,7 +36,7 @@ const BuddyList = () => {
                     return buddy;
                 })
             );
-        }, 10000); // 10 segundos
+        }, 5000); // 10 segundos
 
         const statusInterval = setInterval(() => {
             setBuddies(prevBuddies =>
@@ -54,7 +54,7 @@ const BuddyList = () => {
                     };
                 })
             );
-        }, 20000); // 20 segundos
+        }, 10000); // 20 segundos
 
         return () => {
             clearInterval(songInterval);
