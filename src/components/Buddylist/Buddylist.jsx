@@ -41,7 +41,8 @@ const BuddyList = () => {
         const statusInterval = setInterval(() => {
             setBuddies(prevBuddies =>
                 prevBuddies.map(buddy => {
-                    const newStatus = buddy.status === 'online' ? 'offline' : 'online';
+                    // sea aleatorio online y offline (50% cada uno)
+                    const newStatus = Math.random() > 0.5 ? 'online' : 'offline';
                     // cuando pasa a online ponerle una song randommmmm
                     const newTrack = newStatus === 'online'
                         ? songList[Math.floor(Math.random() * songList.length)]
