@@ -4,7 +4,7 @@
   border: 2px solid var(--border-inactive);
   margin: 17px 31px 0px 0px;
   padding: 11px 8px;
-
+  min-height: 400px;
   overflow-y: hidden;
 }
 .buddy-list:hover {
@@ -19,15 +19,17 @@
   list-style-type: none;
   padding: 0;
   margin: 0;
+  min-height: calc(100% - 50px);
 }
 
 .buddy {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin: 15px 0;
   padding: 10px 5px;
   height: 70px;
+  min-height: 70px;
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -41,6 +43,9 @@
 
 .buddy.offline .buddy-status {
   color: #b3b3b3;
+}
+.buddy.offline {
+  height: 70px;
 }
 
 .buddy-name {

@@ -13,14 +13,17 @@ const BuddyList = () => {
         'Drivers License - Olivia Rodrigo',
         'Glory Box - Portishead',
         'It Will Rain - Bruno Mars',
-        'Cigarettes & Alcochol - Santino Le Saint'
+        'Cigarettes & Alcochol - Santino Le Saint',
+        'Smiles - SoLonely',
+        'Moonchasers - LVNDVN',
+        'Cinderella - Future, Metro Boomin, Travis Scott'
     ];
 
     useEffect(() => {
         const friendos = [
             { id: 1, name: 'Darkkal', status: 'online', currentTrack: songList[Math.floor(Math.random() * songList.length)] },
             { id: 2, name: 'Brayan', status: 'offline', currentTrack: '' },
-            { id: 3, name: 'Lalisa', status: 'online', currentTrack: songList[Math.floor(Math.random() * songList.length)] },
+            { id: 3, name: 'Lalisa', status: 'offline', currentTrack: songList[Math.floor(Math.random() * songList.length)] },
         ];
 
         setBuddies(friendos);
@@ -36,17 +39,24 @@ const BuddyList = () => {
                     return buddy;
                 })
             );
-        }, 5000); // 10 segundos
+        }, 10000); // 10 segundos
 
         const statusInterval = setInterval(() => {
             setBuddies(prevBuddies =>
                 prevBuddies.map(buddy => {
-                    // sea aleatorio online y offline (50% cada uno)
+                    // siempre haya 1 online --- al haber 3 offline se cambia el tamaño (arreglar)
+                    if (buddy.name === 'Darkkal') {
+                        return {
+                            ...buddy,
+                            status: 'online',
+                            currentTrack: songList[Math.floor(Math.random() * songList.length)]
+                        };
+                    }
+                    // 50% tiene cada status xd
                     const newStatus = Math.random() > 0.5 ? 'online' : 'offline';
-                    // cuando pasa a online ponerle una song randommmmm
                     const newTrack = newStatus === 'online'
                         ? songList[Math.floor(Math.random() * songList.length)]
-                        : ''; // offline = ninguna song xd
+                        : '';
                     return {
                         ...buddy,
                         status: newStatus,
@@ -54,7 +64,7 @@ const BuddyList = () => {
                     };
                 })
             );
-        }, 10000); // 20 segundos
+        }, 20000); // 20 segundos
 
         return () => {
             clearInterval(songInterval);
@@ -71,8 +81,10 @@ const BuddyList = () => {
                     <li key={buddy.id} className={`buddy ${buddy.status}`}>
                         <span className="buddy-name">{buddy.name}</span>
                         <span className="buddy-status">{buddy.status}</span>
-                        {buddy.status === 'online' && buddy.currentTrack && (
+                        {buddy.status === 'online' && buddy.currentTrack ? (
                             <span className="buddy-track">Listening to: {buddy.currentTrack}</span>
+                        ) : (
+                            <span className="buddy-track" aria-hidden="true"></span>
                         )}
                     </li>
                 ))}
