@@ -74,8 +74,8 @@
 
 .nombreEspecialAlbum,
 .nombreEspecial {
-  max-width: 200px;
-  width: 70%;
+  max-width: 295px;
+  width: 96%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
