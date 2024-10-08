@@ -31,10 +31,10 @@ const BuddyList = () => {
     ];
 
     useEffect(() => {
-        const songInterval = setInterval(() => {
+        const changeSongForBuddy = (buddyId) => {
             setBuddies(prevBuddies =>
                 prevBuddies.map(buddy => {
-                    if (buddy.status === 'online') {
+                    if (buddy.id === buddyId && buddy.status === 'online') {
                         return {
                             ...buddy,
                             currentTrack: songList[Math.floor(Math.random() * songList.length)]
@@ -43,21 +43,29 @@ const BuddyList = () => {
                     return buddy;
                 })
             );
-        }, 10000 + Math.random() * 25000); // cambio de song entre 15 - 25 seg
 
+
+            const randomTime = 15000 + Math.random() * 10000;
+            setTimeout(() => changeSongForBuddy(buddyId), randomTime);
+        };
+
+
+        buddies.forEach(buddy => {
+            if (buddy.status === 'online') {
+                const initialDelay = 15000 + Math.random() * 10000; // cambio de song entre 15 - 25 segundos
+                setTimeout(() => changeSongForBuddy(buddy.id), initialDelay);
+            }
+        });
 
         const statusInterval = setInterval(() => {
             setBuddies(prevBuddies =>
                 prevBuddies.map(buddy => {
-                    // Darkkal siempre onlineeeeeeeeeeeeeeeeee
+                    // Darkkal siempre onlineeeeeeeeeeeeeeeeeee
                     if (buddy.name === 'Darkkal') {
-                        return {
-                            ...buddy,
-                            status: 'online'
-                        };
+                        return { ...buddy, status: 'online' };
                     }
 
-                    // Para los demás, 50% de probabilidad de estar online/offline
+                    // 50% de chace entre online / offline xd
                     const newStatus = Math.random() > 0.5 ? 'online' : 'offline';
                     return {
                         ...buddy,
@@ -68,10 +76,9 @@ const BuddyList = () => {
                     };
                 })
             );
-        }, 20000);
+        }, 20000); // cambio status cada 20s
 
         return () => {
-            clearInterval(songInterval);
             clearInterval(statusInterval);
         };
     }, []);
