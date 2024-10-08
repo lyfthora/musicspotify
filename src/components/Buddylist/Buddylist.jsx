@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import './Buddylist.css';
 
 const BuddyList = () => {
-    const [buddies, setBuddies] = useState([]);
+    const [buddies, setBuddies] = useState([
+        { id: 1, name: 'Darkkal', status: 'online', currentTrack: '' },
+        { id: 2, name: 'Brayan', status: 'offline', currentTrack: '' },
+        { id: 3, name: 'Lalisa', status: 'offline', currentTrack: '' },
+    ]);
 
-    // Lista de canciones
     const songList = [
         'Shape of You - Ed Sheeran',
         'Blinding Lights - The Weeknd',
@@ -16,55 +19,56 @@ const BuddyList = () => {
         'Cigarettes & Alcochol - Santino Le Saint',
         'Smiles - SoLonely',
         'Moonchasers - LVNDVN',
-        'Cinderella - Future, Metro Boomin, Travis Scott'
+        'Cinderella - Future, Metro Boomin, Travis Scott',
+        'Die With A Smile - Lady Gaga, Bruno Mars',
+        'Creepin - Metro Boomin, The Weekend, 21 Savage',
+        'BABY - DJ Roots, Camo, Jey',
+        'Low - SZA',
+        'Condiciones - Maikel Delacalle',
+        'act iii:on god - 4batz',
+        'act i: stickerz 99 - 4batz',
+        'Angel Numbers / Ten toes - Chris Brown',
     ];
 
     useEffect(() => {
-        const friendos = [
-            { id: 1, name: 'Darkkal', status: 'online', currentTrack: songList[Math.floor(Math.random() * songList.length)] },
-            { id: 2, name: 'Brayan', status: 'offline', currentTrack: '' },
-            { id: 3, name: 'Lalisa', status: 'offline', currentTrack: songList[Math.floor(Math.random() * songList.length)] },
-        ];
-
-        setBuddies(friendos);
-
-
         const songInterval = setInterval(() => {
             setBuddies(prevBuddies =>
                 prevBuddies.map(buddy => {
                     if (buddy.status === 'online') {
-                        const randomSong = songList[Math.floor(Math.random() * songList.length)];
-                        return { ...buddy, currentTrack: randomSong };
+                        return {
+                            ...buddy,
+                            currentTrack: songList[Math.floor(Math.random() * songList.length)]
+                        };
                     }
                     return buddy;
                 })
             );
-        }, 10000); // 10 segundos
+        }, 10000 + Math.random() * 25000); // cambio de song entre 15 - 25 seg
+
 
         const statusInterval = setInterval(() => {
             setBuddies(prevBuddies =>
                 prevBuddies.map(buddy => {
-                    // siempre haya 1 online --- al haber 3 offline se cambia el tamaño (arreglar)
+                    // Darkkal siempre onlineeeeeeeeeeeeeeeeee
                     if (buddy.name === 'Darkkal') {
                         return {
                             ...buddy,
-                            status: 'online',
-                            currentTrack: songList[Math.floor(Math.random() * songList.length)]
+                            status: 'online'
                         };
                     }
-                    // 50% tiene cada status xd
+
+                    // Para los demás, 50% de probabilidad de estar online/offline
                     const newStatus = Math.random() > 0.5 ? 'online' : 'offline';
-                    const newTrack = newStatus === 'online'
-                        ? songList[Math.floor(Math.random() * songList.length)]
-                        : '';
                     return {
                         ...buddy,
                         status: newStatus,
-                        currentTrack: newTrack
+                        currentTrack: newStatus === 'online'
+                            ? songList[Math.floor(Math.random() * songList.length)]
+                            : ''
                     };
                 })
             );
-        }, 20000); // 20 segundos
+        }, 20000);
 
         return () => {
             clearInterval(songInterval);

@@ -5,7 +5,8 @@
   border: 2px solid #535353;
   width: 96%;
   height: 70px;
-  margin: 25px 0px 0px 41px;
+  margin: 25px 0px 0px 40px;
+  padding-right: 2px;
 }
 #suppBar:hover {
   border: 2px solid var(--border-active);
