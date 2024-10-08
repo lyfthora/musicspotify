@@ -1,9 +1,9 @@
 .buddy-list {
-  width: 84%;
+  width: 135%;
   height: 82%;
   border: 2px solid var(--border-inactive);
-  margin: 17px 41px 0px 0px;
-  padding: 11px 7px;
+  margin: 17px 0px 0px -1px;
+  padding: 11px 0px;
   min-height: 400px;
   overflow-y: hidden;
 }
@@ -27,8 +27,8 @@
   flex-direction: column;
   justify-content: flex-start;
   margin: 15px 0;
-  padding: 10px 5px;
-  height: 70px;
+  padding: 6px 5px;
+  height: 85px;
   min-height: 70px;
   box-sizing: border-box;
   overflow: hidden;
@@ -55,10 +55,9 @@
 .buddy-track {
   font-size: 0.9em;
   color: #b3b3b3;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 240px;
+  min-width: 163px;
+  max-width: 220px;
+  width: 100%;
 }
 .text-decoration-buddylist {
   position: absolute;
