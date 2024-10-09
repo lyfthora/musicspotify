@@ -2,8 +2,8 @@
   width: 135%;
   height: 82%;
   border: 2px solid var(--border-inactive);
-  margin: 17px 0px 0px -3px;
-  padding: 11px 0px;
+  margin: 15px 0px 0px -3px;
+  padding: 0px 0px 24px 0px;
   min-height: 400px;
   overflow-y: hidden;
 }
