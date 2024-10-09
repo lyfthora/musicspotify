@@ -1,9 +1,10 @@
 .pages {
-  width: 96%;
+  width: 95%;
   background-color: var(--accent-inactive);
   color: var(--text);
   border: 2px solid var(--border-inactive);
   margin: 20px 20px 0 20px;
+  padding-right: 3px;
   transition: border-color 0.3s ease;
 }
 
