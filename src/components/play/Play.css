@@ -11,7 +11,7 @@
 }
 
 .player:hover .text-decoration-player {
-  color: var(--border-active);
+  color: var(--accent);
 }
 
 .player-content {
