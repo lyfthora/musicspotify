@@ -12,6 +12,10 @@
   border-color: var(--border-active);
 }
 
+.pages:hover .text-decoration {
+  color: var(--border-active);
+}
+
 .pages nav ul {
   list-style-type: none;
   padding: 0;
