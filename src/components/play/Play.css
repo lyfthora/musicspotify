@@ -10,6 +10,10 @@
   border: 2px solid var(--border-active);
 }
 
+.player:hover .text-decoration-player {
+  color: var(--border-active);
+}
+
 .player-content {
   display: flex;
   align-items: center;
