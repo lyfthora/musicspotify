@@ -33,6 +33,9 @@ body {
   border-color: var(--border-active);
 }
 
+.sidebar:hover .text-decoration-playlist {
+  color: var(--border-active);
+}
 .categories-container {
   display: flex;
   justify-content: space-between;
