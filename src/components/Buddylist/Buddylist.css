@@ -10,6 +10,11 @@
 .buddy-list:hover {
   border-color: var(--border-active);
 }
+
+.buddy-list:hover .text-decoration-buddylist {
+  color: var(--border-active);
+}
+
 .buddy-list h2 {
   color: var(--text-active);
   margin-bottom: 15px;
