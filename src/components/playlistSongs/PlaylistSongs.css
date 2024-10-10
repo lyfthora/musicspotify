@@ -180,6 +180,10 @@
   border-color: var(--border-active);
 }
 
+.content:hover .text-decoration-main {
+  color: var(--border-active);
+}
+
 .nombreEspecial,
 .nombreEspecialArtista,
 .nombreEspecialAlbum {
