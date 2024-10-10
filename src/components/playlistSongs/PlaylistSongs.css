@@ -181,7 +181,7 @@
 }
 
 .content:hover .text-decoration-main {
-  color: var(--border-active);
+  color: var(--accent);
 }
 
 .nombreEspecial,
