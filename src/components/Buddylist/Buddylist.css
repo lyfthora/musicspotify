@@ -12,7 +12,7 @@
 }
 
 .buddy-list:hover .text-decoration-buddylist {
-  color: var(--border-active);
+  color: var(--accent);
 }
 
 .buddy-list h2 {
