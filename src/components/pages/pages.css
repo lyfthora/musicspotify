@@ -13,7 +13,7 @@
 }
 
 .pages:hover .text-decoration {
-  color: var(--border-active);
+  color: var(--accent);
 }
 
 .pages nav ul {
