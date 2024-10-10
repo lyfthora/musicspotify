@@ -34,7 +34,7 @@ body {
 }
 
 .sidebar:hover .text-decoration-playlist {
-  color: var(--border-active);
+  color: var(--accent);
 }
 .categories-container {
   display: flex;
