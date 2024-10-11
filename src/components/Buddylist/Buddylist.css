@@ -50,9 +50,6 @@
 .buddy.offline .buddy-status {
   color: #b3b3b3;
 }
-.buddy.offline {
-  height: 70px;
-}
 
 .buddy-name {
   color: var(--text);
