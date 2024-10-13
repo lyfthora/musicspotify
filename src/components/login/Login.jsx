@@ -57,7 +57,7 @@ export default function Login() {
                     SPOTIFY-TUI
                 </h3>
                 <button onClick={login} id="btnLogin" className="btnLogin">
-                    INICIAR SESION
+                    LOGIN
                 </button>
             </div>
         </div>
