@@ -12,13 +12,13 @@ body {
   padding-bottom: 50px;
 }
 .btnLogin {
-  background-color: #00d856;
-  box-shadow: 0px 0px 20px #62ffa1;
+  background-color: #121212;
+
   padding: 20px;
   margin-bottom: 20px;
-  border-radius: 25px;
-  color: rgb(0, 0, 0);
-  border: 0px black;
+
+  color: white;
+  border: 1px solid var(--border-inactive);
 }
 #imgLogo {
   padding-top: 40px;
