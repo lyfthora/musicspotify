@@ -20,6 +20,11 @@ body {
   color: white;
   border: 1px solid var(--border-inactive);
 }
+
+.btnLogin:hover {
+  border: 1px solid var(--border-active);
+}
+
 #imgLogo {
   padding-top: 40px;
   padding-bottom: 10px;
@@ -27,9 +32,13 @@ body {
 }
 #login {
   background-color: #121212;
-  margin-top: 40px;
+  margin-top: 18%;
   padding-bottom: 40px;
   border: 1px solid var(--border-inactive);
   margin-left: 35%;
   margin-right: 35%;
+}
+
+#login:hover {
+  border: 1px solid var(--border-active);
 }
