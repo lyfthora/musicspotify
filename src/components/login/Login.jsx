@@ -54,7 +54,7 @@ export default function Login() {
             <div id="login">
                 {/* <img src={imgLogin} id="imgLogo" alt="" /> */}
                 <h3 className="subtitle">
-                    Visualiza toda la información de tu perfil de Spotify
+                    SPOTIFY-TUI
                 </h3>
                 <button onClick={login} id="btnLogin" className="btnLogin">
                     INICIAR SESION
