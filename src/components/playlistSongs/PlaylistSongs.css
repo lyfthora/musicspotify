@@ -172,7 +172,7 @@
   background-color: var(--accent-inactive);
   color: var(--text);
   border: 2px solid var(--border-inactive);
-  margin: 15px 16px 95px 5px;
+  margin: 15px 16px 97px 5px;
   transition: border-color 0.3s ease;
 }
 
