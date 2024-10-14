@@ -84,9 +84,12 @@ export default class Header extends Component {
     render() {
         return (
             <div className="general">
+
                 <div>
-                    <div className="row mx-lg-5 mx-3" >
+
+                    <div  >
                         <div id="suppBar">
+                            <div className="text-decoration-header">User</div>
                             {
                                 (this.state.statusPerf === true) && (
                                     <div>
