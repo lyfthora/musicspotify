@@ -1,6 +1,15 @@
 .general {
   background-color: #121212;
 }
+.text-decoration-header {
+  position: absolute;
+  top: 1.5%;
+  color: white;
+  margin: 3px 0 0 4px;
+  background-color: var(--main);
+  font-size: 13px;
+}
+
 #suppBar {
   border: 2px solid #535353;
   width: 96%;
@@ -11,6 +20,11 @@
 #suppBar:hover {
   border: 2px solid var(--border-active);
 }
+
+#suppBar:hover .text-decoration-header {
+  color: var(--accent);
+}
+
 .logOut {
   float: left;
   margin: auto;
