@@ -130,20 +130,11 @@ class PlaylistSongs extends Component {
 
                 <div className="load">
 
-                    <h1>CARGANDO...</h1>
+                    <h1></h1>
                     <div className="carga"></div>
                 </div>
             );
         }
-
-        if (!statusSong) {
-            return (
-                <div className="noSongs">
-                    <h1>NO HAY CANCIONES EN ESTA PLAYLIST</h1>
-                </div>
-            );
-        }
-
         return (
 
             <div className="canciones">
