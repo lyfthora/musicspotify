@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import './Playlist.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLock, faLockOpen, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import Global from '../../Global/Global';
 
@@ -10,7 +10,6 @@ export default class Playlists extends Component {
     playlists: [],
     playlistsPublicas: [],
     playlistsPrivadas: [],
-    playlistsSeguidas: [],
     activeCategory: 'privadas',
     statusPlay: false,
     totalListas: 0,
@@ -42,9 +41,8 @@ export default class Playlists extends Component {
           const playlists = data.items;
           this.setState(prevState => ({
             playlists: [...prevState.playlists, ...playlists],
-            playlistsPublicas: [...prevState.playlistsPublicas, ...playlists.filter(p => p.public)], // Playlist públicas
-            playlistsPrivadas: [...prevState.playlistsPrivadas, ...playlists.filter(p => !p.public && p.owner.id === prevState.nombreUsuario)], // Privadas del usuario
-            playlistsSeguidas: [...prevState.playlistsSeguidas, ...playlists.filter(p => p.owner.id !== prevState.nombreUsuario)], // Playlists seguidas
+            playlistsPublicas: [...prevState.playlistsPublicas, ...playlists.filter(p => p.public)],
+            playlistsPrivadas: [...prevState.playlistsPrivadas, ...playlists.filter(p => !p.public && p.owner.id === prevState.nombreUsuario)],
             totalListas: data.total,
           }), () => {
             this.offsetPlaylist += Global.playlistLimit;
@@ -56,7 +54,6 @@ export default class Playlists extends Component {
       })
       .catch(error => console.error("Error fetching playlists:", error));
   }
-
 
   selectFirstSongFromFirstPlaylist = () => {
     if (this.state.playlistsPrivadas.length > 0) {
@@ -107,28 +104,27 @@ export default class Playlists extends Component {
   }
 
   render() {
-    const { playlistsPublicas, playlistsPrivadas, playlistsSeguidas, activeCategory } = this.state;
+    const { playlistsPublicas, playlistsPrivadas, activeCategory } = this.state;
 
     return (
       <div className="sidebar">
         <div className="text-decoration-playlist">Playlist</div>
         <div className="listas">
           <div className="categories-container">
-            {['publicas', 'privadas', 'seguidas'].map(category => (
+            {['publicas', 'privadas'].map(category => (
               <button
                 key={category}
                 onClick={() => this.handleCategoryClick(category)}
                 className={`category-button ${activeCategory === category ? 'active' : ''}`}
               >
-                <FontAwesomeIcon icon={category === 'publicas' ? faLockOpen : category === 'privadas' ? faLock : faHeart} className="icon" />
-                {category === 'publicas' ? 'Public' : category === 'privadas' ? 'Private' : 'Liked'}
+                <FontAwesomeIcon icon={category === 'publicas' ? faLockOpen : faLock} className="icon" />
+                {category === 'publicas' ? 'Public' : 'Private'}
               </button>
             ))}
           </div>
           <div className="playlists-list">
             {activeCategory === 'publicas' && playlistsPublicas.map(this.renderPlaylistButton)}
             {activeCategory === 'privadas' && playlistsPrivadas.map(this.renderPlaylistButton)}
-            {activeCategory === 'seguidas' && playlistsSeguidas.map(this.renderPlaylistButton)}
           </div>
         </div>
       </div>
