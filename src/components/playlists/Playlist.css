@@ -38,7 +38,7 @@ body {
 }
 .categories-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: 10px;
   position: sticky;
   top: 0;
@@ -126,6 +126,11 @@ body {
   height: calc(91vh - 60px);
   width: 95%;
 }
+.playlists-list {
+  overflow-y: auto;
+  max-height: calc(65vh - 197px);
+}
+
 .playlist-thumbnail {
   width: 40px;
   height: 40px;
