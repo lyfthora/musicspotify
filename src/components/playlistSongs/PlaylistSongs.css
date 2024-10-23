@@ -204,3 +204,9 @@
   background-color: var(--main);
   margin: 0 0 0 4px;
 }
+
+/* @media screen and (min-width: 1025px) {
+  .text-decoration-main {
+    top: 9.6%;
+  }
+} */
