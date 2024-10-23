@@ -70,3 +70,12 @@
   margin: 0px 0px 0px 4px;
   top: 11.5%;
 }
+
+@media screen and (min-width: 1025px) {
+  .buddy-list {
+    height: 85%;
+  }
+  .text-decoration-buddylist {
+    top: 9.6%;
+  }
+}
