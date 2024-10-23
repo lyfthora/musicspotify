@@ -198,3 +198,12 @@ body {
   color: var(--text);
   background-color: var(--accent-active);
 }
+
+/* @media screen and (min-width: 100px) {
+  .text-decoration-playlist {
+    top: 28.5%;
+  }
+  .playlists-list {
+    max-height: calc(69vh - 197px);
+  }
+} */
