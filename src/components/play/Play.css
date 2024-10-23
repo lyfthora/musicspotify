@@ -110,3 +110,12 @@
   background-color: var(--main);
   font-size: 13px;
 }
+
+/* @media screen and (min-width: 1080px) {
+  .text-decoration-player {
+    top: 85.7%;
+  }
+  .time-display {
+    top: 93.7%;
+  }
+} */
